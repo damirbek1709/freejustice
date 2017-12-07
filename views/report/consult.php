@@ -1,48 +1,55 @@
 <?
+
 use yii\helpers\Html;
+
 $link = "create";
-if(!$model->isNewRecord)
-    $link = "report/update/".$model->id;
+if (!$model->isNewRecord)
+    $link = "report/update/" . $model->id;
 ?>
+<div class="report-type-cover">
+    <div class="general_heading">
+        В том числе:
+    </div>
+    <div class="col-md-6"><?= $form->field($model, 'legacy')->textInput() ?></div>
 
-<?= $form->field($model, 'legacy')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'donation_register')->textInput() ?></div>
 
-<?= $form->field($model, 'donation_register')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'private_property')->textInput() ?></div>
 
-<?= $form->field($model, 'private_property')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'entity_registration')->textInput() ?></div>
 
-<?= $form->field($model, 'entity_registration')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'civil_contract')->textInput() ?></div>
 
-<?= $form->field($model, 'civil_contract')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'trade_contract')->textInput() ?></div>
 
-<?= $form->field($model, 'trade_contract')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'donation_contract')->textInput() ?></div>
 
-<?= $form->field($model, 'donation_contract')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'authority_procedural_action')->textInput() ?></div>
 
-<?= $form->field($model, 'authority_procedural_action')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'family_law')->textInput() ?></div>
 
-<?= $form->field($model, 'family_law')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'labor_disputes')->textInput() ?></div>
 
-<?= $form->field($model, 'labor_disputes')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'land_disputes')->textInput() ?></div>
 
-<?= $form->field($model, 'land_disputes')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'housing_disputes')->textInput() ?></div>
 
-<?= $form->field($model, 'housing_disputes')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'social_protection')->textInput() ?></div>
 
-<?= $form->field($model, 'social_protection')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'criminal_case')->textInput() ?></div>
 
-<?= $form->field($model, 'criminal_case')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'administrative_offense')->textInput() ?></div>
 
-<?= $form->field($model, 'administrative_offense')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'moral_material_harm')->textInput() ?></div>
 
-<?= $form->field($model, 'moral_material_harm')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'divorce')->textInput() ?></div>
 
-<?= $form->field($model, 'divorce')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'alimony')->textInput() ?></div>
 
-<?= $form->field($model, 'alimony')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'identity_document')->textInput() ?></div>
 
-<?= $form->field($model, 'identity_document')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'domestic_violence')->textInput() ?></div>
 
-<?= $form->field($model, 'domestic_violence')->textInput() ?>
 
-<?=Html::a('Далее',["{$link}#w1-tab2"],['class'=>'btn btn-primary switch-tab']);?>
+</div>
+<?= Html::a('Далее', ["{$link}#w1-tab2"], ['class' => 'btn btn-primary switch-tab']); ?>

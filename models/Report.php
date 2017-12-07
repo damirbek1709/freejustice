@@ -107,7 +107,7 @@ class Report extends \yii\db\ActiveRecord
             'city_id' => Yii::t('app', 'Город'),
             'month' => Yii::t('app', 'Месяц'),
             'legacy' => Yii::t('app', 'Вопросы наследства(завещание)'),
-            'donation_register' => Yii::t('app', 'Оформление'),
+            'donation_register' => Yii::t('app', 'Оформление договора дарения'),
             'private_property' => Yii::t('app', 'Вопросы, связанные с правом собственности'),
             'entity_registration' => Yii::t('app', 'Регистрация юридического лица'),
             'civil_contract' => Yii::t('app', 'Составление гражданско-правовых договоров'),

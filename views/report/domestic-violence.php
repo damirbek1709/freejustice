@@ -1,40 +1,74 @@
-<?php
+<?
+
 use yii\helpers\Html;
+
 $link = "create";
-if(!$model->isNewRecord)
-    $link = "report/update/".$model->id;
+if (!$model->isNewRecord)
+    $link = "report/update/" . $model->id;
 ?>
+<div class="report-type-cover">
+    <div class="general_heading">
+        В том числе по полу:
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'vi_men')->textInput() ?>
+    </div>
 
-<?= $form->field($model, 'vi_men')->textInput() ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'vi_women')->textInput() ?>
+    </div>
+</div>
 
-<?= $form->field($model, 'vi_women')->textInput() ?>
+<div class="report-type-cover">
+    <div class="general_heading">
+        В том числе по возрастам:
+    </div>
+    <div class="col-md-6">
+        <?= $form->field($model, 'vi_age_20')->textInput() ?>
+    </div>
 
-<?= $form->field($model, 'vi_age_20')->textInput() ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'vi_age_21_35')->textInput() ?>
+    </div>
 
-<?= $form->field($model, 'vi_age_21_35')->textInput() ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'vi_age_36_60')->textInput() ?>
+    </div>
 
-<?= $form->field($model, 'vi_age_36_60')->textInput() ?>
+    <div class="col-md-6">
+        <?= $form->field($model, 'vi_age_60')->textInput() ?>
+    </div>
+</div>
 
-<?= $form->field($model, 'vi_age_60')->textInput() ?>
 
-<?= $form->field($model, 'vi_social_poor')->textInput() ?>
+<div class="report-type-cover">
+    <div class="general_heading">
+        В том числе по по социальному статусу:
+    </div>
 
-<?= $form->field($model, 'vi_social_pensioner')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_social_poor')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_social_worker')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_social_pensioner')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_social_unemployed')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_social_worker')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_social_underage')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_social_unemployed')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_social_disabled')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_social_underage')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_civil_kyrgyz_republic')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_social_disabled')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_civil_foreign')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_civil_kyrgyz_republic')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_civil_without')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_civil_foreign')->textInput() ?></div>
 
-<?= $form->field($model, 'vi_civil_refugee')->textInput() ?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_civil_without')->textInput() ?></div>
 
-<?=Html::a('Далее',["{$link}#w1-tab3"],['class'=>'btn btn-primary switch-tab']);?>
+    <div class="col-md-6"><?= $form->field($model, 'vi_civil_refugee')->textInput() ?></div>
+</div>
+
+<?= Html::a('Далее', ["{$link}#w1-tab1"], ['class' => 'btn btn-primary switch-tab']); ?>
+
+
+
+
