@@ -61,7 +61,7 @@ $this->title = 'Мои отчеты';
                         return $url;
                     }
                     if ($action === 'delete') {
-                        $url = \yii\helpers\Url::base() . '/report/delete' . $model->id;
+                        $url = \yii\helpers\Url::base() . '/report/delete/' . $model->id;
                         return $url;
                     }
 

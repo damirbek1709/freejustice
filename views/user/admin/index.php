@@ -28,6 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
+<?=Html::a('Добавить пользователя',['/user/add'],['class'=>'btn btn-primary'])?>
 
 <?php Pjax::begin() ?>
 
