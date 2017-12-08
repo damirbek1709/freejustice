@@ -33,7 +33,7 @@ AppAsset::register($this);
     if (Yii::$app->user->identity->isAdmin) {
         $items_arr = [
             ['label' => 'Отчеты', 'url' => ['/site/index']],
-            ['label' => 'Пользователи', 'url' => ['/user/index']],
+            ['label' => 'Пользователи', 'url' => ['/user/admin']],
             ['label' => 'Выход', 'url' => ['/user/logout'],
                 'linkOptions' => ['data-method' => 'post']]
         ];
