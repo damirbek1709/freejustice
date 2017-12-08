@@ -59,27 +59,7 @@ $model = \Yii::createObject(LoginForm::className());?>
 
                 <?php endif ?>
 
-                <?php if ($module->debug): ?>
-                    <div class="alert alert-warning">
-                        <?= Yii::t('user', 'Password is not necessary because the module is in DEBUG mode.'); ?>
-                    </div>
-                <?php else: ?>
-                    <?= $form->field(
-                        $model,
-                        'password',
-                        ['inputOptions' => ['class' => 'form-control', 'tabindex' => '2']])
-                        ->passwordInput()
-                        ->label(
-                            Yii::t('user', 'Password')
-                            . ($module->enablePasswordRecovery ?
-                                ' (' . Html::a(
-                                    Yii::t('user', 'Forgot password?'),
-                                    ['/user/recovery/request'],
-                                    ['tabindex' => '5']
-                                )
-                                . ')' : '')
-                        ) ?>
-                <?php endif ?>
+               
 
                 <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '3']) ?>
 
