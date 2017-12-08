@@ -30,7 +30,7 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
-    if (Yii::$app->user->identity->isAdmin) {
+    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) {
         $items_arr = [
             ['label' => 'Отчеты', 'url' => ['/site/index']],
             ['label' => 'Пользователи', 'url' => ['/user/admin']],

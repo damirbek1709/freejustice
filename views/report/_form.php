@@ -81,6 +81,7 @@ use kartik\tabs\TabsX;
         'options' => ['class' => 'tab-margin']
     ]); ?>
 
+    <div style=""><?= $form->errorSummary($model); ?></div>
     <?php ActiveForm::end(); ?>
 </div>
 
