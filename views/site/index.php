@@ -10,7 +10,6 @@ $this->title = 'Мои отчеты';
 <div class="site-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
         'columns' => [
             'id',
             [
