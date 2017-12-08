@@ -8,12 +8,12 @@ use yii\helpers\Html;
 $this->title = Yii::t('app', 'Редактировать: ', [
     'modelClass' => 'Report',
 ]) . $model->id;
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->getMonth($model->month)." ".$model->year, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('app', 'Update');
 ?>
 <div class="report-update">
 
-    <h1>Редактировать отчет </h1>
+    <div class="main-heading">Редактировать отчет за <?=$model->getMonth($model->month)." ".$model->year?> </div>
 
     <?= $this->render('_form', [
         'model' => $model,
