@@ -67,6 +67,7 @@ use kartik\tabs\TabsX;
         echo $form->field($model, 'user_id')->hiddenInput(['value' => $model->user_id])->label(false);
         $model->month = $model->month;
     } else {
+        $model->month = $month;
         echo $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
     }
 
