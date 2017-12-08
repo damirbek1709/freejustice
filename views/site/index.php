@@ -10,6 +10,7 @@ $this->title = 'Мои отчеты';
 <div class="site-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+        'summary'=>false,
         'columns' => [
             'id',
             [
@@ -40,7 +41,7 @@ $this->title = 'Мои отчеты';
                     },
                     'delete' => function ($url, $model) {
                         $d = date_parse_from_format("Y-m-d", $model->date_created);
-                        if (date('m') - $d['month'] <= 2) {
+                        if (date('m') - $d['month'] <= 2 || Yii::$app->user->identity->isAdmin) {
                             return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
                                 'title' => Yii::t('app', 'Удалить'),
                                 'data-confirm' => 'Вы уверены что хотите удалить отчет?'

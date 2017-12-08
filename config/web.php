@@ -34,6 +34,7 @@ $config = [
             ],
             'enableFlashMessages' => false,
             'enableRegistration'=>false,
+            'enableConfirmation'=>false,
         ],
         //'rbac' => 'dektrium\rbac\RbacWebModule',
     ],
