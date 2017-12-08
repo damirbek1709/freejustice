@@ -87,12 +87,31 @@ class Report extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id','month','year'],'required'],
+            [['user_id','month','year','date_created','date_updated'],'required'],
             [['user_id', 'city_id', 'month', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment', 'traning_issue'], 'safe'],
             [['user_id', 'city_id', 'month', 'legacy', 'donation_register', 'private_property', 'entity_registration', 'civil_contract', 'trade_contract', 'donation_contract', 'authority_procedural_action', 'family_law', 'labor_disputes', 'land_disputes', 'housing_disputes', 'social_protection', 'criminal_case', 'administrative_offense', 'moral_material_harm', 'divorce', 'alimony', 'identity_document', 'domestic_violence', 'men', 'women', 'age_20', 'age_21_35', 'age_36_60', 'age_60', 'social_poor', 'social_pensioner', 'social_worker', 'social_unemployed', 'social_underage', 'social_disabled', 'civil_kyrgyz_republic', 'civil_foreign', 'civil_without', 'civil_refugee', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'vi_men', 'vi_women', 'vi_age_20', 'vi_age_21_35', 'vi_age_36_60', 'vi_age_60', 'vi_social_poor', 'vi_social_pensioner', 'vi_social_worker', 'vi_social_unemployed', 'vi_social_underage', 'vi_social_disabled', 'vi_civil_kyrgyz_republic', 'vi_civil_foreign', 'vi_civil_without', 'vi_civil_refugee'], 'integer'],
             [['traning_issue'], 'string'],
             [['equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment'], 'string', 'max' => 1000],
         ];
+    }
+
+    public function getMonth($num){
+        $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
+            5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
+            9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
+        return $month_arr[$num];
+    }
+
+    public function beforeSave($insert)
+    {
+        if ($this->isNewRecord) {
+            $this->date_created = date("Y-m-d");
+            $this->date_updated = date("Y-m-d");
+        }
+       else{
+           $this->date_updated = date("Y-m-d");
+       }
+        return parent::beforeSave($insert);
     }
 
     /**
@@ -173,6 +192,9 @@ class Report extends \yii\db\ActiveRecord
             'vi_civil_foreign' => Yii::t('app', 'Иностранцы'),
             'vi_civil_without' => Yii::t('app', 'Лица без гражданства'),
             'vi_civil_refugee' => Yii::t('app', 'Беженцы'),
+
+            'date_created' => Yii::t('app', 'Дата добавления'),
+            'date_updated' => Yii::t('app', 'Дата изменения'),
         ];
     }
 }

@@ -7,32 +7,34 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
 use app\models\ContactForm;
+use dektrium\user\models\LoginForm;
+use app\models\ReportSearch;
+use dektrium\user\filters\AccessRule;
 
 class SiteController extends Controller
 {
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    public $layout;
+
+
+    function behaviors()
     {
         return [
-            'access' => [
+            'roleAccess' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
                         'allow' => true,
-                        'roles' => ['@'],
+                        'actions' => ['index'],
+                        'roles' => ['?', '@'],
                     ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+
                 ],
             ],
         ];
@@ -54,14 +56,33 @@ class SiteController extends Controller
         ];
     }
 
+    public function actionError() {
+        $exception = Yii::$app->errorHandler->exception;
+        if ($exception !== null) {
+            $this->layout = 'main';
+            return $this->render('error', ['name' => $exception->getCode(), 'message' => $exception->getMessage()]);
+        }
+    }
+
     /**
      * Displays homepage.
      *
      * @return string
      */
+
     public function actionIndex()
     {
-        return $this->render('index');
+        if (!Yii::$app->user->isGuest) {
+            $searchModel = new ReportSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            if (!Yii::$app->user->identity->isAdmin) {
+                $dataProvider->query->andFilterWhere(['user_id' => Yii::$app->user->id]);
+            }
+            return $this->render('index', ['dataProvider' => $dataProvider]);
+        } else {
+            $this->layout = 'empty';
+            return $this->render('enter');
+        }
     }
 
     /**

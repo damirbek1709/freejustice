@@ -7,7 +7,6 @@ use yii\helpers\Html;
 /* @var $model app\models\Report */
 
 $this->title = Yii::t('app', 'Create Report');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Reports'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="report-create">

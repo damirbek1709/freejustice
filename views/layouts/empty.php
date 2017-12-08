@@ -1,7 +1,6 @@
 <?php
 
 /* @var $this \yii\web\View */
-
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -29,36 +28,6 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
-    <?php
-    if (Yii::$app->user->identity->isAdmin) {
-        $items_arr = [
-            ['label' => 'Отчеты', 'url' => ['/site/index']],
-            ['label' => 'Пользователи', 'url' => ['/user/index']],
-            ['label' => 'Выход', 'url' => ['/user/logout'],
-                'linkOptions' => ['data-method' => 'post']]
-        ];
-    } else {
-        $items_arr = [
-            ['label' => 'Мои отчеты', 'url' => ['/site/index']],
-            ['label' => 'Добавить отчет', 'url' => ['/report/create']],
-            ['label' => 'Выход', 'url' => ['/user/logout'],
-                'linkOptions' => ['data-method' => 'post']]
-        ];
-    }
-
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $items_arr
-    ]);
-    NavBar::end();
-    ?>
 
     <div class="container">
         <?= Breadcrumbs::widget([

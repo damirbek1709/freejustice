@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label">Город</label>
+                    <label class="control-label">Место</label>
                     <input class="form-control" type="text" id="maxArea" name="city">
                 </div>
 

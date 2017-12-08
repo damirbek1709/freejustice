@@ -6,7 +6,9 @@ use Yii;
 use app\models\Report;
 use app\models\ReportSearch;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\HttpException;
 use yii\filters\AccessControl;
 use dektrium\user\filters\AccessRule;
 
@@ -30,15 +32,20 @@ class ReportController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['create'],
-                        'roles' => ['@','admin'],
+                        'roles' => ['@', 'admin'],
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['view'],
+                        'roles' => ['@'],
                     ],
 
                     [
                         'allow' => true,
-                        'actions' => ['update','delete','view'],
-                        'roles' => ['@','admin'],
+                        'actions' => ['update', 'delete', 'view'],
+                        'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
-                            if ((!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin )|| $this->isUserAuthor()) {
+                            if ((!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) || $this->isUserAuthor()) {
                                 return true;
                             }
                             return false;
@@ -116,14 +123,18 @@ class ReportController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $d = date_parse_from_format("Y-m-d", $model->date_created);
+        if (date('m') - $d['month'] > 2) {
+            throw new NotFoundHttpException("Истек срок редактирования данного отчета");
+        } else {
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->render('update', [
+                'model' => $model,
+            ]);
         }
-
-        return $this->render('update', [
-            'model' => $model,
-        ]);
     }
 
     /**

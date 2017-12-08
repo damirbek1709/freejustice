@@ -48,14 +48,10 @@ use kartik\tabs\TabsX;
         ],
     ];
 
-    if (!$model->isNewRecord) {
-        echo $form->field($model, 'user_id')->hiddenInput(['value' => $model->user_id])->label(false);
-    } else {
-        echo $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
-    }
 
 
-    $year_arr = [date('Y')];
+
+    $year_arr = [date('Y')=>date('Y')];
     $month = date('m');
     if($month-1 == 0)
         $year_arr[]=date('Y', strtotime('-1 year'));
@@ -64,7 +60,16 @@ use kartik\tabs\TabsX;
     $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
         5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
         9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
-    $model->month = $month;
+
+
+
+    if (!$model->isNewRecord) {
+        echo $form->field($model, 'user_id')->hiddenInput(['value' => $model->user_id])->label(false);
+        $model->month = $model->month;
+    } else {
+        echo $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
+    }
+
     echo $form->field($model, 'month')->dropDownList($month_arr);
 
 

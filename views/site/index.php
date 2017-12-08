@@ -1,53 +1,72 @@
 <?php
 
+use yii\grid\GridView;
+use yii\helpers\Html;
+
 /* @var $this yii\web\View */
 
-$this->title = 'Система управления USAID';
+$this->title = 'Мои отчеты';
 ?>
 <div class="site-index">
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            'id',
+            [
+                'attribute' => 'month',
+                'value' => function ($model) {
+                    return $model->getMonth($model->month);
+                }
+            ],
+            'year',
+            'date_created',
+            'date_updated',
+            ['class' => 'yii\grid\ActionColumn',
+                'template' => '{view}{update}{delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        return Html::a("<span class='glyphicon glyphicon-eye-open'></span>", $url, [
+                            'title' => Yii::t('app', 'Просмотр'),
+                        ]);
+                    },
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+                    'update' => function ($url, $model) {
+                        $d = date_parse_from_format("Y-m-d", $model->date_created);
+                        if (date('m') - $d['month'] <= 2) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', $url, [
+                                'title' => Yii::t('app', 'Редактировать'),
+                            ]);
+                        }
+                    },
+                    'delete' => function ($url, $model) {
+                        $d = date_parse_from_format("Y-m-d", $model->date_created);
+                        if (date('m') - $d['month'] <= 2) {
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', $url, [
+                                'title' => Yii::t('app', 'Удалить'),
+                                'data-confirm' => 'Вы уверены что хотите удалить отчет?'
+                            ]);
+                        }
+                    }
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
+                ],
+                'urlCreator' => function ($action, $model, $key, $index) {
+                    if ($action === 'view') {
+                        $url = \yii\helpers\Url::base() . '/report/' . $model->id;
+                        return $url;
+                    }
 
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
-    </div>
+                    if ($action === 'update') {
+                        $url = \yii\helpers\Url::base() . '/report/update/' . $model->id;
+                        return $url;
+                    }
+                    if ($action === 'delete') {
+                        $url = \yii\helpers\Url::base() . '/report/delete' . $model->id;
+                        return $url;
+                    }
 
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
-        </div>
-
-    </div>
+                }
+            ],
+        ],
+    ]); ?>
 </div>

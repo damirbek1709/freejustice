@@ -5,13 +5,13 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'language'=>'ru-RU',
-    'name'=>'Usaid CRM',
+    'language' => 'ru-RU',
+    'name' => 'ЦБЮП',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
-        '@npm'   => '@vendor/npm-asset',
+        '@npm' => '@vendor/npm-asset',
     ],
     'modules' => [
         'user' => [
@@ -24,9 +24,11 @@ $config = [
             ],
             'controllerMap' => [
                 'recovery' => 'app\controllers\user\RecoveryController',
-                /*'profile' => 'app\controllers\user\ProfileController',
-                'security' => 'app\controllers\user\SecurityController',
-                'admin' =>'app\controllers\user\AdminController',*/
+                //'profile' => 'app\controllers\user\ProfileController',
+                /*'security' => [
+                    'class'=>'app\controllers\user\SecurityController',
+                ],*/
+                //'admin' =>'app\controllers\user\AdminController'
             ],
             'enableFlashMessages' => false,
         ],
