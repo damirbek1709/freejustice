@@ -34,7 +34,6 @@ $model = \Yii::createObject(LoginForm::className());?>
             <div class="panel-body">
                 <?php $form = ActiveForm::begin([
                     'id' => 'login-form',
-                    'action' =>['user/login'],
                     'enableAjaxValidation' => true,
                     'enableClientValidation' => false,
                     'validateOnBlur' => false,
@@ -59,7 +58,27 @@ $model = \Yii::createObject(LoginForm::className());?>
 
                 <?php endif ?>
 
-               
+                <?php if ($module->debug): ?>
+                    <div class="alert alert-warning">
+                        <?= Yii::t('user', 'Password is not necessary because the module is in DEBUG mode.'); ?>
+                    </div>
+                <?php else: ?>
+                    <?= $form->field(
+                        $model,
+                        'password',
+                        ['inputOptions' => ['class' => 'form-control', 'tabindex' => '2']])
+                        ->passwordInput()
+                        ->label(
+                            Yii::t('user', 'Password')
+                            . ($module->enablePasswordRecovery ?
+                                ' (' . Html::a(
+                                    Yii::t('user', 'Forgot password?'),
+                                    ['/user/recovery/request'],
+                                    ['tabindex' => '5']
+                                )
+                                . ')' : '')
+                        ) ?>
+                <?php endif ?>
 
                 <?= $form->field($model, 'rememberMe')->checkbox(['tabindex' => '3']) ?>
 
@@ -71,7 +90,16 @@ $model = \Yii::createObject(LoginForm::className());?>
                 <?php ActiveForm::end(); ?>
             </div>
         </div>
-
+        <?php if ($module->enableConfirmation): ?>
+            <p class="text-center">
+                <?= Html::a(Yii::t('user', 'Didn\'t receive confirmation message?'), ['/user/registration/resend']) ?>
+            </p>
+        <?php endif ?>
+        <?php if ($module->enableRegistration): ?>
+            <p class="text-center">
+                <?= Html::a(Yii::t('user', 'Don\'t have an account? Sign up!'), ['/user/registration/register']) ?>
+            </p>
+        <?php endif ?>
 
     </div>
 </div>

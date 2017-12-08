@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'language' => 'ru-RU',
     'name' => 'ЦБЮП',
+    'defaultRoute' => 'user/login',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -25,12 +26,14 @@ $config = [
             'controllerMap' => [
                 'recovery' => 'app\controllers\user\RecoveryController',
                 //'profile' => 'app\controllers\user\ProfileController',
-                /*'security' => [
+                'security' => [
                     'class'=>'app\controllers\user\SecurityController',
-                ],*/
+                    'layout' => 'empty',
+                ],
                 //'admin' =>'app\controllers\user\AdminController'
             ],
             'enableFlashMessages' => false,
+            'enableRegistration'=>false,
         ],
         //'rbac' => 'dektrium\rbac\RbacWebModule',
     ],
