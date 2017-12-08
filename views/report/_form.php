@@ -12,7 +12,7 @@ use kartik\tabs\TabsX;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="report-form">
+<div class="report-form report-form-type">
 
     <?php $form = ActiveForm::begin(); ?>
 

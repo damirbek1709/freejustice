@@ -1,16 +1,21 @@
-<?php use yii\helpers\Html;
-$link = "create";
-if(!$model->isNewRecord)
-    $link = "report/update/".$model->id;
-?>
+<?php use yii\helpers\Html; ?>
+    <div class="report-type-cover">
+        <label><?= $model->getAttributeLabel('equipment_issue'); ?></label>
+        <div class="clear"></div>
+        <div class="report-view-sign"><?= $model->equipment_issue == 1 ? $model->equipment_issue_comment : "Нет"; ?></div>
+    </div>
 
-<?=$form->field($model, 'equipment_issue')->radioList([1 => 'Да', 0 =>'Нет'], ['class' => 'i-checks']);?>
-<?= $form->field($model, 'equipment_issue_comment')->textarea(['maxlength' => true,'rows'=>5,'class'=>'fader equip-fader form-control','placeholder'=>'Пожалуйста опишите проблему в деталях'])->label(false) ?>
+    <div class="report-type-cover">
+        <label><?= $model->getAttributeLabel('lawyer_duty_issue'); ?></label>
+        <div class="clear"></div>
+        <div class="report-view-sign"><?= $model->lawyer_duty_issue == 1 ? $model->lawyer_duty_issue_comment : "Нет"; ?></div>
+    </div>
 
-<?=$form->field($model, 'lawyer_duty_issue')->radioList([1 => 'Да', 0 =>'Нет'], ['class' => 'i-checks']);?>
-<?= $form->field($model, 'lawyer_duty_issue_comment')->textarea(['maxlength' => true,'rows'=>5,'class'=>'fader lawyer-fader form-control','placeholder'=>'Пожалуйста опишите проблему в деталях'])->label(false) ?>
 
-<?=$form->field($model, 'bother_issue')->radioList([1 => 'Да', 0 =>'Нет'], ['class' => 'i-checks']);?>
-<?= $form->field($model, 'bother_issue_comment')->textarea(['maxlength' => true,'rows'=>5,'class'=>'fader bother-fader form-control','placeholder'=>'Пожалуйста опишите проблему в деталях'])->label(false) ?>
-
-<?=Html::a('Далее',["{$link}#w1-tab4"],['class'=>'btn btn-primary switch-tab']);?>
+    <div class="report-type-cover">
+        <label><?= $model->getAttributeLabel('bother_issue'); ?></label>
+        <div class="clear"></div>
+        <div class="report-view-sign"><?= $model->bother_issue ==1 ? $model->bother_issue_comment : "Нет"; ?></div>
+    </div>
+    <div class="clear"></div>
+<?= Html::a('Далее', ["report/{$model->id}#w9-tab4"], ['class' => 'btn btn-primary switch-tab']); ?>

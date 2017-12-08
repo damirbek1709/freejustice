@@ -115,14 +115,14 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
-.report-form .tabs-krajee.tabs-left .nav-tabs{
+.report-form-type .tabs-krajee.tabs-left .nav-tabs{
     width: 200px;
     text-align: center;
 }
-.report-form .tabs-krajee.tabs-left .tab-content {
+.report-form-type .tabs-krajee.tabs-left .tab-content {
     margin-left: 199px;
 }
-.report-form .tab-content > .tab-pane {
+.report-form-type .tab-content > .tab-pane {
     padding: 15px;
 }
 .tab-icon{
@@ -130,13 +130,13 @@ a.desc:after {
     width: 100%;
     font-size: 30px;
 }
-.report-form .tabs-left .tab-content{
+.report-form-type .tabs-left .tab-content{
     border: 1px solid #ddd;
 }
 .fader{
     display: none;
 }
-.report-form label{
+.report-form-type label{
     font-family: 'Play', sans-serif;
     font-weight: 700;
     font-size: 15px;
@@ -154,4 +154,18 @@ a.desc:after {
     margin-bottom: 15px;
     margin-top: 15px;
     text-align: center;
+}
+.equal-divider th{
+    width: 50%;
+}
+.report-view-sign{
+    line-height: 26px;
+}
+
+.main-heading{
+    font-family: 'Play',sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    margin-top: 20px;
 }

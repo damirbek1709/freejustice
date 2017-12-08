@@ -1,7 +1,8 @@
 <?php
 use yii\helpers\Html;
 ?>
-<?= $form->field($model, 'traning_issue')->textarea(['rows' => 6]) ?>
-<div class="form-group">
-    <?= Html::submitButton(Yii::t('app', 'Сохранить'), ['class' => 'btn btn-success']) ?>
+<div class="report-type-cover">
+    <label><?= $model->getAttributeLabel('traning_issue'); ?></label>
+    <div class="clear"></div>
+    <div class="report-view-sign"><?= $model->traning_issue ? $model->traning_issue : ""; ?></div>
 </div>
