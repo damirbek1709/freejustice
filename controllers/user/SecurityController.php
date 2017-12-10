@@ -65,7 +65,7 @@ class SecurityController extends BaseSecurityController
                 return $this->goBack();
             }
             else{
-                return $this->redirect('/report/city',['id'=>Yii::$app->user->id]);
+                return $this->redirect(['/report/city', 'id' => Yii::$app->user->id]);
             }
         }
 
