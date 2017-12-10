@@ -1,7 +1,10 @@
+<script src="https://use.fontawesome.com/02d1fd9ded.js"></script>
 <?php
 
 use yii\helpers\Html;
-use yii\grid\GridView;
+use yii\helpers\ArrayHelper;
+use app\models\Report;
+use kartik\tabs\TabsX;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ReportSearch */
@@ -10,85 +13,107 @@ use yii\grid\GridView;
 $this->title = Yii::t('app', 'Reports');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="report-index">
+<div class="report-index report-form-type">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php
+    $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
+        5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
+        9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Create Report'), ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    $year_arr = [
+        date('Y') => date('Y'),
+        date('Y', strtotime('-1 year')) => date('Y', strtotime('-1 year')),
+        date('Y', strtotime('-2 year')) => date('Y', strtotime('-2 year'))
+    ];
+    $user =
+    $centre_arr = ArrayHelper::map(\app\models\User::find()
+        ->select(['id', 'city'])
+        ->andFilterWhere(['!=', 'id', 1])
+        ->asArray()->all(),
+        'id', 'city');
 
-            'id',
-            'user_id',
-            'city_id',
-            'month',
-            'legacy',
-            // 'donation_register',
-            // 'private_property',
-            // 'entity_registration',
-            // 'civil_contract',
-            // 'trade_contract',
-            // 'donation_contract',
-            // 'authority_procedural_action',
-            // 'family_law',
-            // 'labor_disputes',
-            // 'land_disputes',
-            // 'housing_disputes',
-            // 'social_protection',
-            // 'criminal_case',
-            // 'administrative_offense',
-            // 'moral_material_harm',
-            // 'divorce',
-            // 'alimony',
-            // 'identity_document',
-            // 'domestic_violence',
-            // 'men',
-            // 'women',
-            // 'age_20',
-            // 'age_21_35',
-            // 'age_36_60',
-            // 'age_60',
-            // 'social_poor',
-            // 'social_pensioner',
-            // 'social_worker',
-            // 'social_unemployed',
-            // 'social_underage',
-            // 'social_disabled',
-            // 'civil_kyrgyz_republic',
-            // 'civil_foreign',
-            // 'civil_without',
-            // 'civil_refugee',
-            // 'equipment_issue',
-            // 'lawyer_duty_issue',
-            // 'bother_issue',
-            // 'equipment_issue_comment',
-            // 'lawyer_duty_issue_comment',
-            // 'bother_issue_comment',
-            // 'traning_issue:ntext',
-            // 'vi_men',
-            // 'vi_women',
-            // 'vi_age_20',
-            // 'vi_age_21_35',
-            // 'vi_age_36_60',
-            // 'vi_age_60',
-            // 'vi_social_poor',
-            // 'vi_social_pensioner',
-            // 'vi_social_worker',
-            // 'vi_social_unemployed',
-            // 'vi_social_underage',
-            // 'vi_social_disabled',
-            // 'vi_civil_kyrgyz_republic',
-            // 'vi_civil_foreign',
-            // 'vi_civil_without',
-            // 'vi_civil_refugee',
+    $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : 1;
+    $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : 12;
 
-            ['class' => 'yii\grid\ActionColumn'],
+    $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : date('Y');
+    $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : date('Y');
+    $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+
+    $report = new Report();
+
+    $items = [
+        [
+            'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
+            'content' => $this->render('details', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'active' => true,
         ],
-    ]); ?>
+        [
+            'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
+            'content' => $this->render('graphics', ['report' => $report,'dataProvider'=>$dataProvider]),
+        ],
+
+    ];
+    ?>
+    <!----------------------------------------------------------------------------------------------------------------->
+
+    <?php
+    echo Html::beginForm(['report/index'], 'get', ['class' => '']);
+    echo Html::beginTag('div', ['class' => 'col-md-6 pad-remove']);
+
+    echo Html::tag('div', 'От', ['class' => 'col-md-2 label-siding']);
+
+    echo Html::beginTag('div', ['class' => 'col-md-5 pad-remove-left']);
+    echo Html::dropDownList('month_from', $month_from, $month_arr, ['class' => 'form-control']);
+    echo Html::endTag('div');
+
+    echo Html::beginTag('div', ['class' => 'col-md-5 pad-remove-left pad-remove-right']);
+    echo Html::dropDownList('year_from', $year_from, $year_arr, ['class' => 'form-control']);
+    echo Html::endTag('div');
+
+    echo Html::endTag('div');
+
+    /*-------------------------------------------------------------------------------------------------*/
+
+    echo Html::beginTag('div', ['class' => 'col-md-6 pad-remove']);
+
+    echo Html::tag('div', '- до', ['class' => 'col-md-2 label-siding']);
+
+    echo Html::beginTag('div', ['class' => 'col-md-5 pad-remove-left']);
+    echo Html::dropDownList('month_till', $month_till, $month_arr, ['class' => 'form-control']);
+    echo Html::endTag('div');
+
+    echo Html::beginTag('div', ['class' => 'col-md-5 pad-remove-left pad-remove-right']);
+    echo Html::dropDownList('year_till', $year_till, $year_arr, ['class' => 'form-control']);
+    echo Html::endTag('div');
+
+    echo Html::endTag('div');
+
+    /*-------------------------------------------------------------------------------------------------*/
+    echo Html::tag('div','',['class'=>'col-md-12 top-20-marginer']);
+
+    echo Html::beginTag('div', ['class' => 'col-md-4 pad-remove-left']);
+    echo Html::dropDownList('centre', $centre, $centre_arr, ['class' => 'form-control', 'prompt' => 'Все']);
+    echo Html::endTag('div');
+
+    echo Html::beginTag('div', ['class' => 'col-md-2 pad-remove-left pad-remove-right']);
+    echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary' ,'style'=>'width:100%;text-align:center']);
+    echo Html::endTag('div');
+
+    //--   -----------------------------------------------------------------------------------------------------
+
+
+    //$report = $report->getTotal($dataProvider->models, 'men');
+    ?>
+
+
+    <div class="col-md-12 pad-remove top-20-marginer">
+        <?
+        echo TabsX::widget([
+            'enableStickyTabs' => true,
+            'items' => $items,
+            'encodeLabels' => false,
+            'options' => ['class' => 'tab-margin']
+        ]); ?>
+    </div>
+
 </div>

@@ -18,6 +18,7 @@ use dektrium\user\filters\AccessRule;
 class SecurityController extends BaseSecurityController
 {
     public $layout;
+
     function behaviors()
     {
         return [
@@ -60,11 +61,16 @@ class SecurityController extends BaseSecurityController
 
         if ($model->load(\Yii::$app->getRequest()->post()) && $model->login()) {
             $this->trigger(self::EVENT_AFTER_LOGIN, $event);
-            return $this->goBack();
+            if (Yii::$app->user->identity->isAdmin) {
+                return $this->goBack();
+            }
+            else{
+                return $this->redirect('/report/city',['id'=>Yii::$app->user->id]);
+            }
         }
 
         return $this->render('login', [
-            'model'  => $model,
+            'model' => $model,
             'module' => $this->module,
         ]);
     }

@@ -11,6 +11,7 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
 
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -32,40 +33,55 @@ AppAsset::register($this);
     <?php
     if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) {
         $items_arr = [
-            ['label' => 'Отчеты', 'url' => ['/site/index']],
-            ['label' => 'Пользователи', 'url' => ['/user/admin']],
-            ['label' => 'Выход', 'url' => ['/user/logout'],
-                'linkOptions' => ['data-method' => 'post']]
+            ['label' => 'Центры', 'url' => ['/site/index']],
+            ['label' => 'Управление центрами', 'url' => ['/user/admin']],
+            ['label' => 'Отчеты', 'url' => ['/report/index']],
+            ['label' => 'История', 'url' => ['/site/history']],
+            ['label' => 'Рассылка', 'url' => ['/user/mail']],
+//            ['label' => 'Выход', 'url' => ['/user/logout'],
+//                'linkOptions' => ['data-method' => 'post']]
         ];
     } else {
         $items_arr = [
-            ['label' => 'Мои отчеты', 'url' => ['/site/index']],
+            ['label' => 'Мои отчеты', 'url' => ['/report/city','id'=>Yii::$app->user->id]],
             ['label' => 'Добавить отчет', 'url' => ['/report/create']],
             ['label' => 'Выход', 'url' => ['/user/logout'],
                 'linkOptions' => ['data-method' => 'post']]
         ];
-    }
-
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => $items_arr
-    ]);
-    NavBar::end();
-    ?>
-
+    } ?>
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
-        <?= $content ?>
+        <div class="col-md-3">
+            <?php
+            echo Nav::widget([
+                'options' => [
+                    'class' => 'nav-pills nav-stacked',
+                ],
+                'items' => $items_arr,
+            ]); ?>
+        </div>
+
+
+        <? /*NavBar::begin([
+            'brandLabel' => Yii::$app->name,
+            'brandUrl' => Yii::$app->homeUrl,
+            'options' => [
+            'class' => 'navbar-inverse navbar-fixed-top',
+            ],
+            ]);
+            echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => $items_arr
+            ]);
+            NavBar::end();*/
+        ?>
+
+
+        <div class="col-md-9"><?= Breadcrumbs::widget([
+                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+            ]) ?>
+            <?= Alert::widget() ?>
+            <?= $content ?>
+        </div>
     </div>
 </div>
 

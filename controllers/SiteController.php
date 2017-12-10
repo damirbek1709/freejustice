@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -59,12 +60,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $searchModel = new ReportSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if (!Yii::$app->user->identity->isAdmin) {
-            $dataProvider->query->andFilterWhere(['user_id' => Yii::$app->user->id]);
-        }
-        return $this->render('index', ['dataProvider' => $dataProvider]);
+        $userModel = User::find()->select(['id','city'])->andFilterWhere(['!=','id',1])->asArray()->all();
+        return $this->render('index', ['reportModel' => $userModel]);
     }
 
 }

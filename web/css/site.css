@@ -122,6 +122,27 @@ a.desc:after {
 .report-form-type .tabs-krajee.tabs-left .tab-content {
     margin-left: 199px;
 }
+
+
+.report-form-type .nav-tabs{
+    text-align: center;
+    font-family: Play,sans-serif;
+    font-size: 18px;
+}
+
+.report-form-type .nav > li > a{
+    background-color: #eee;
+    border-color: #ddd #ddd #eee #ddd;
+}
+.report-form-type .nav > li.active > a{
+    background-color: #fff;
+}
+.report-form-type .tab-content {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-top: none;
+}
+
 .report-form-type .tab-content > .tab-pane {
     padding: 15px;
 }
@@ -168,4 +189,76 @@ a.desc:after {
     font-weight: 700;
     margin-bottom: 20px;
     margin-top: 20px;
+}
+.righter{
+    text-align: right;
+}
+.grid-div{
+    padding: 6px 4px;
+    font-family: 'Play',sans-serif;
+    overflow: hidden;
+    font-size: 16px;
+}
+.grid-div:nth-child(odd){
+    background-color: lightgoldenrodyellow;
+}
+.pad-lim{
+    padding: 10px 0!important;
+    font-size: 18px;
+    font-family: Play,sans-serif;
+}
+.pad-remove{
+    padding: 0!important;
+}
+
+.label-siding{
+    padding: 4px 0 0!important;
+    text-align: center;
+    font-size: 18px;
+    font-family: Play;
+}
+
+.pad-remove-left{
+    padding-left: 0;
+}
+
+.pad-remove-right{
+    padding-right: 0;
+}
+.top-20-marginer{
+    margin-top: 20px;
+}
+.centre-align{
+    text-align: center;
+}
+.piechart{
+    text-align: center;
+    display: table;
+    margin: 0 auto;
+    height: 300px;
+}
+
+.barchart{
+    text-align: center;
+}
+.report-form .nav-tabs > li {
+    float: left;
+    margin-bottom: -1px;
+    max-width: 165px;
+    height: 112px;
+}
+
+.report-form .nav-tabs{
+    font-size: 15px!important;
+}
+.report-form .tab-icon{
+    font-size: 21px;
+}
+.report-form- .nav > li.active > a {
+    background-color: #fff;
+    height: 100%;
+}
+
+.report-form .nav > li > a{
+    height: 100%;
 }

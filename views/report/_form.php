@@ -17,7 +17,6 @@ use kartik\tabs\TabsX;
     <?php $form = ActiveForm::begin(); ?>
 
     <?php
-
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Общая статистика консультаций',
@@ -48,9 +47,6 @@ use kartik\tabs\TabsX;
         ],
     ];
 
-
-
-
     $year_arr = [date('Y')=>date('Y')];
     $month = date('m');
     if($month-1 == 0)
@@ -76,7 +72,7 @@ use kartik\tabs\TabsX;
 
     echo TabsX::widget([
         'enableStickyTabs' => true,
-        'position' => TabsX::POS_LEFT,
+        //'position' => TabsX::POS_LEFT,
         'items' => $items,
         'encodeLabels' => false,
         'options' => ['class' => 'tab-margin']

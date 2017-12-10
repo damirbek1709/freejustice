@@ -81,6 +81,15 @@ class Report extends \yii\db\ActiveRecord
         return 'report';
     }
 
+    public static function getTotal($provider, $columnName)
+    {
+        $total = 0;
+        foreach ($provider as $item) {
+            $total += $item[$columnName];
+        }
+        return $total;
+    }
+
     /**
      * @inheritdoc
      */

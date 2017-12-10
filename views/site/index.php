@@ -2,13 +2,28 @@
 
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 
 $this->title = 'Мои отчеты';
 ?>
 <div class="site-index">
-    <?= GridView::widget([
+
+<?php
+echo Html::a('Добавить',['/user/add'],['class'=>'btn btn-success']);
+echo Html::tag('div','',['class'=>'clear']);
+$items = ArrayHelper::map($reportModel,'id','city');
+$result = array_unique($items);
+
+foreach ($result as $key=>$val) {
+    echo Html::beginTag('div',['class'=>'col-md-3 pad-lim']);
+    echo Html::a($val,['/report/city','id'=>$key]);
+    echo Html::endTag('div');
+}
+?>
+
+    <?/*= GridView::widget([
         'dataProvider' => $dataProvider,
         'summary'=>false,
         'columns' => [
@@ -68,5 +83,5 @@ $this->title = 'Мои отчеты';
                 }
             ],
         ],
-    ]); ?>
+    ]);*/ ?>
 </div>

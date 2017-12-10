@@ -36,13 +36,13 @@ class ReportController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['view'],
+                        'actions' => ['view','index'],
                         'roles' => ['@'],
                     ],
 
                     [
                         'allow' => true,
-                        'actions' => ['update', 'delete', 'view'],
+                        'actions' => ['update', 'delete', 'view','city'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             if ((!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) || $this->isUserAuthor()) {
@@ -54,7 +54,7 @@ class ReportController extends Controller
 
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['city'],
                         'roles' => ['admin'],
                     ],
                 ],
@@ -73,10 +73,42 @@ class ReportController extends Controller
      */
     public function actionIndex()
     {
+        $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
+        $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
+
+        $year_from = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+        $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+
+        $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $dataProvider->query->andFilterWhere(['>=','month', $month_from]);
+        $dataProvider->query->andFilterWhere(['>=','year', $year_from]);
+
+        $dataProvider->query->andFilterWhere(['<=','month', $month_till]);
+        $dataProvider->query->andFilterWhere(['<=','year', $year_till]);
+
+        if(!Yii::$app->user->identity->isAdmin){
+            $centre = Yii::$app->user->id;
+        }
+
+        $dataProvider->query->andFilterWhere(['user_id' => $centre]);
+
         return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCity($id)
+    {
+        $searchModel = new ReportSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['user_id'=>$id]);
+
+        return $this->render('city', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
