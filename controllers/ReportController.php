@@ -102,11 +102,11 @@ class ReportController extends Controller
         ]);
     }
 
-    public function actionCity($id)
+    public function actionCity()
     {
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['user_id'=>$id]);
+        $dataProvider->query->andFilterWhere(['user_id'=>Yii::$app->user->id]);
 
         return $this->render('city', [
             'searchModel' => $searchModel,
