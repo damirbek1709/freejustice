@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Report;
 use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
@@ -60,8 +61,14 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        $userModel = User::find()->select(['id','city'])->andFilterWhere(['!=','id',1])->asArray()->all();
-        return $this->render('index', ['reportModel' => $userModel]);
+        if (Yii::$app->user->identity->isAdmin) {
+            $userModel = User::find()->select(['id', 'city'])->andFilterWhere(['!=', 'id', 1])->asArray()->all();
+            return $this->render('index', ['reportModel' => $userModel]);
+        }
+        else{
+            $report = Report::find()->select(['id','month'])->andFilterWhere(['user_id'=>Yii::$app->user->id])->all();
+            return $this->render('simple_index',['report'=>$report]);
+        }
     }
 
 }

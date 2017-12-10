@@ -43,7 +43,7 @@ AppAsset::register($this);
         ];
     } else {
         $items_arr = [
-            ['label' => 'Мои отчеты', 'url' => ['/report/city','id'=>Yii::$app->user->id]],
+            ['label' => 'Мои отчеты', 'url' => ['/site/index']],
             ['label' => 'Добавить отчет', 'url' => ['/report/create']],
             ['label' => 'Выход', 'url' => ['/user/logout'],
                 'linkOptions' => ['data-method' => 'post']]
