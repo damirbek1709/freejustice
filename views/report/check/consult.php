@@ -16,7 +16,7 @@ use yii\helpers\Html;
             'donation_register',
             'private_property',
             'entity_registration',
-            'vi_civil_contract',
+            'civil_contract',
             'trade_contract',
             'donation_contract',
             'authority_procedural_action',
