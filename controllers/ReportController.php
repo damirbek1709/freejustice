@@ -137,7 +137,12 @@ class ReportController extends Controller
         $model = new Report();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if(Yii::$app->user->identity->isAdmin) {
+                return $this->redirect(['city', 'id' => $model->user_id]);
+            }
+            else{
+                return $this->redirect(['/site/index']);
+            }
         }
 
         return $this->render('create', [
@@ -160,7 +165,12 @@ class ReportController extends Controller
             throw new NotFoundHttpException("Истек срок редактирования данного отчета");
         } else {
             if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                return $this->redirect(['view', 'id' => $model->id]);
+                if(Yii::$app->user->identity->isAdmin) {
+                    return $this->redirect(['city', 'id' => $model->user_id]);
+                }
+                else{
+                    return $this->redirect(['/site/index']);
+                }
             }
 
             return $this->render('update', [
