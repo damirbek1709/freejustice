@@ -66,8 +66,10 @@ class SiteController extends Controller
             return $this->render('index', ['reportModel' => $userModel]);
         }
         else{
-            $report = Report::find()->select(['id','month'])->andFilterWhere(['user_id'=>Yii::$app->user->id])->all();
-            return $this->render('simple_index',['report'=>$report]);
+            $searchModel = new ReportSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+            $dataProvider->query->andFilterWhere(['user_id'=>Yii::$app->user->id]);
+            return $this->render('simple_index',['dataProvider'=>$dataProvider]);
         }
     }
 

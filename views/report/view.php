@@ -17,15 +17,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php
     $items = [
         [
-            'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Общая статистика консультаций',
+            'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div>Цифровой отчет',
             'content' => $this->render('check/general-stats', ['model' => $model]),
             'active' => true,
         ],
         [
-            'label' => '<div class="tab-icon glyphicon glyphicon-question-sign"></div> Вопросы предоставленных консультаций',
-            'content' => $this->render('check/consult', ['model' => $model]),
+            'label' => '<div class="tab-icon glyphicon glyphicon-question-sign"></div> Графический отчет',
+            'content' => $this->render('check/graphics', ['model' => $model]),
         ],
-        [
+        /*[
             'label' => '<div class="tab-icon glyphicon glyphicon-home"></div> По вопросам домашнего насилия',
             'content' => $this->render('check/domestic-violence', ['model' => $model]),
         ],
@@ -37,12 +37,11 @@ $this->params['breadcrumbs'][] = $this->title;
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-blackboard"></div> Потребности в тренингах',
             'content' => $this->render('check/traning', ['model' => $model]),
-        ],
+        ],*/
     ];
 
     echo TabsX::widget([
         'enableStickyTabs' => true,
-        'position' => TabsX::POS_LEFT,
         'items' => $items,
         'encodeLabels' => false,
         'options' => ['class' => 'tab-margin']

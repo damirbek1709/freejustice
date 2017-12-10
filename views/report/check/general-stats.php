@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 ?>
+<div class="main-heading centre-align">Общая статистика консультаций</div>
 <div class="report-type-cover">
     <div class="general_heading">
         В том числе по полу:
@@ -69,7 +70,11 @@ use yii\widgets\DetailView;
         ],
     ]); ?>
 </div>
-<?= Html::a('Далее', ["report/{$model->id}#w9-tab1"], ['class' => 'btn btn-primary switch-tab']); ?>
+
+<?=$this->render('consult',['model'=>$model]);?>
+<?=$this->render('domestic-violence',['model'=>$model]);?>
+
+
 
 
 

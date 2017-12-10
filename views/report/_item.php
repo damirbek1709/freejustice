@@ -15,9 +15,9 @@ use yii\helpers\Html;
 </div>
 
 <div class="col-md-3 righter">
-    <?echo Html::a('Редактировать',['update','id'=>$model->id],[]);?>
+    <?echo Html::a('Редактировать',['/report/update','id'=>$model->id],[]);?>
 </div>
 
 <div class="col-md-3 righter">
-    <?echo Html::a('Удалить',['delete','id'=>$model->id],['data-confirm'=>'Удалить ']);?>
+    <?echo Html::a('Удалить',['/report/delete','id'=>$model->id],['data-confirm'=>'Удалить ']);?>
 </div>
