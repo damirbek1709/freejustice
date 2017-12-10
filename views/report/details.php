@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-echo Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> Privacy Statement', ['/report/export'], [
+echo Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> Экспортировать в PDF', ['/report/export'], [
     'class'=>'btn btn-danger',
     'target'=>'_blank',
     'data-toggle'=>'tooltip',
