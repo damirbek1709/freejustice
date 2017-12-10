@@ -31,7 +31,7 @@
         ]);
 
         var options = {
-            'title': 'Итог консультаций по полу',
+            'title': '',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -315,7 +315,7 @@
     }
 
 </script>
-
+<div class="general_heading centre-align">Итог консультаций по полу</div>
 <div id="sexpiechart" class="piechart"></div>
 <div id="agepiechart" class="piechart"></div>
 <div id="socialpiechart" class="piechart"></div>

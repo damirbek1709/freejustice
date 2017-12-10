@@ -6,6 +6,7 @@ echo Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> Экспортир�
     'data-toggle'=>'tooltip',
     'title'=>'Will open the generated PDF file in a new window'
 ]);
+echo "test message";
 ?>
 
 <div class="main-heading centre-align">Общая статистика консультаций</div>
