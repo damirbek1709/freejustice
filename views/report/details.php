@@ -9,7 +9,7 @@ echo Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> Экспортир�
 echo "test message";
 ?>
 
-<div class="main-heading centre-align">Общая статистика консультаций</div>
+<div class="main-heading centre-align">Общая статистика консультаций - </div>
 <div class="report-type-cover">
     <div class="general_heading">
         В том числе по полу:
