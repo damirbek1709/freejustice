@@ -1,3 +1,13 @@
+<?php
+use yii\helpers\Html;
+echo Html::a('<i class="fa glyphicon glyphicon-hand-up"></i> Privacy Statement', ['/report/export'], [
+    'class'=>'btn btn-danger',
+    'target'=>'_blank',
+    'data-toggle'=>'tooltip',
+    'title'=>'Will open the generated PDF file in a new window'
+]);
+?>
+
 <div class="main-heading centre-align">Общая статистика консультаций</div>
 <div class="report-type-cover">
     <div class="general_heading">

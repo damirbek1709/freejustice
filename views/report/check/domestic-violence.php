@@ -69,7 +69,6 @@ use yii\widgets\DetailView;
         ],
     ]); ?>
 </div>
-<?= Html::a('Далее', ["report/{$model->id}#w9-tab3"], ['class' => 'btn btn-primary switch-tab']); ?>
 
 
 

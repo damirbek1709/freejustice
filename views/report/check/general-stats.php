@@ -73,6 +73,8 @@ use yii\widgets\DetailView;
 
 <?=$this->render('consult',['model'=>$model]);?>
 <?=$this->render('domestic-violence',['model'=>$model]);?>
+<?=$this->render('operation',['model'=>$model]);?>
+<?=$this->render('traning',['model'=>$model]);?>
 
 
 

@@ -1,5 +1,5 @@
 <?php
-
+use kartik\mpdf\Pdf;
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
 
@@ -39,6 +39,14 @@ $config = [
         //'rbac' => 'dektrium\rbac\RbacWebModule',
     ],
     'components' => [
+        'pdf' => [
+            'class' => Pdf::classname(),
+            'mode'=>Pdf::MODE_UTF8,
+            'format' => Pdf::FORMAT_A4,
+            'orientation' => Pdf::ORIENT_PORTRAIT,
+            'destination' => Pdf::DEST_BROWSER,
+            // refer settings section for all configuration options
+        ],
         'view' => [
             'theme' => [
                 'pathMap' => [
