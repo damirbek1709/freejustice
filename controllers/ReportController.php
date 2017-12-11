@@ -108,6 +108,7 @@ class ReportController extends Controller
         return $pdf->render();
     }
 
+
     protected function isUserAuthor()
     {
         return $this->findModel(Yii::$app->request->get('id'))->user_id == Yii::$app->user->id;
