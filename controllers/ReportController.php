@@ -53,7 +53,6 @@ class ReportController extends Controller
                             return false;
                         }
                     ],
-
                     [
                         'allow' => true,
                         'actions' => ['index','city'],
