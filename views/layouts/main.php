@@ -6,6 +6,7 @@
 
 use app\widgets\Alert;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -49,7 +50,13 @@ AppAsset::register($this);
                 'linkOptions' => ['data-method' => 'post']]
         ];
     } ?>
-    <div class="container">
+    <div class="container" style="padding: 10px 0 15px">
+
+        <div class="col-md-12">
+            <div class="col-md-3">
+                <?=Html::a(Html::img(Url::base().'/images/site/logo.png'),['/site/index'],['class'=>'logo']);?>
+            </div>
+        </div>
         <div class="col-md-3">
             <?php
             echo Nav::widget([

@@ -44,12 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
-            'content' => $this->render('details', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'content' => $this->render('digital', ['report' => $report,'dataProvider'=>$dataProvider]),
             'active' => true,
         ],
         [
             'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
-            'content' => $this->render('graphics', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'content' => $this->render('pre-graphics', ['report' => $report,'dataProvider'=>$dataProvider]),
         ],
 
     ];

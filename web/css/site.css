@@ -126,7 +126,7 @@ a.desc:after {
 
 .report-form-type .nav-tabs{
     text-align: center;
-    /*font-family: Play,sans-serif;*/
+    font-family: Play,sans-serif;
     font-size: 18px;
 }
 
@@ -205,7 +205,7 @@ a.desc:after {
 .pad-lim{
     padding: 10px 0!important;
     font-size: 18px;
-    /*font-family: Play,sans-serif;*/
+    font-family: Play,sans-serif;
 }
 .pad-remove{
     padding: 0!important;
@@ -261,4 +261,7 @@ a.desc:after {
 
 .report-form .nav > li > a{
     height: 100%;
+}
+.logo img{
+    width: 250px;
 }
