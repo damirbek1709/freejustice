@@ -51,7 +51,6 @@ AppAsset::register($this);
         ];
     } ?>
     <div class="container" style="padding: 10px 0 15px">
-
         <div class="col-md-12">
             <div class="col-md-3">
                 <?=Html::a(Html::img(Url::base().'/images/site/logo.png'),['/site/index'],['class'=>'logo']);?>

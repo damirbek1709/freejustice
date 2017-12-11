@@ -298,8 +298,6 @@
 
 <!-----------------------------------------CIVIL STATUS ------------------------------------------------->
 
-<!--oooooooo-->
-
 
 <div class="report-type-cover">
     <div class="general_heading">
