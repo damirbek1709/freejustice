@@ -102,7 +102,7 @@ class ReportController extends Controller
             ],
             'methods' => [
                 'SetHeader' => ['Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР ' . date("Y-m-d")],
-                'SetFooter' => ['|Page {PAGENO}|'],
+                'SetFooter' => ['|{PAGENO}|'],
             ],
         ]);
         return $pdf->render();
