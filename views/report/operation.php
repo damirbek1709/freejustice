@@ -13,4 +13,3 @@ if(!$model->isNewRecord)
 <?=$form->field($model, 'bother_issue')->radioList([1 => 'Да', 0 =>'Нет'], ['class' => 'i-checks']);?>
 <?= $form->field($model, 'bother_issue_comment')->textarea(['maxlength' => true,'rows'=>5,'class'=>'fader bother-fader form-control','placeholder'=>'Пожалуйста опишите проблему в деталях'])->label(false) ?>
 
-<?=Html::a('Далее',["{$link}#w1-tab4"],['class'=>'btn btn-primary switch-tab']);?>

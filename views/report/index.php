@@ -98,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
     echo Html::beginTag('div', ['class' => 'col-md-2 pad-remove-left pad-remove-right']);
     echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary' ,'style'=>'width:100%;text-align:center']);
     echo Html::endTag('div');
+    echo Html::beginForm();
 
     //--   -----------------------------------------------------------------------------------------------------
 

@@ -61,15 +61,32 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+        $user = User::findOne(Yii::$app->user->id);
+
         if (Yii::$app->user->identity->isAdmin) {
-            $userModel = User::find()->select(['id', 'city'])->andFilterWhere(['!=', 'id', 1])->asArray()->all();
+            $userModel = User::find()->select(['id', 'city'])->andFilterWhere(['!=', 'id', Yii::$app->user->identity->id])->asArray()->all();
             return $this->render('index', ['reportModel' => $userModel]);
-        }
-        else{
-            $searchModel = new ReportSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-            $dataProvider->query->andFilterWhere(['user_id'=>Yii::$app->user->id]);
-            return $this->render('simple_index',['dataProvider'=>$dataProvider]);
+        } else {
+            if ($user->childs) {
+                $userModel = User::find()->select(['id', 'city'])->andFilterWhere(['!=', 'id', Yii::$app->user->identity->id])->andFilterWhere(['parent' => Yii::$app->user->identity->id])->asArray()->all();
+                return $this->render('index', ['reportModel' => $userModel]);
+            } else {
+                $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
+                $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
+
+                $year_from = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+                $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+
+                $searchModel = new ReportSearch();
+                $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+                $dataProvider->query->andFilterWhere(['>=', 'month', $month_from]);
+                $dataProvider->query->andFilterWhere(['>=', 'year', $year_from]);
+
+                $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
+                $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);
+                $dataProvider->query->andFilterWhere(['user_id' => Yii::$app->user->id]);
+                return $this->render('simple_index', ['dataProvider' => $dataProvider]);
+            }
         }
     }
 

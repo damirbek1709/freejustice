@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use app\models\Report;
 use app\models\ReportSearch;
@@ -38,7 +39,7 @@ class ReportController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['view','index'],
+                        'actions' => ['index'],
                         'roles' => ['@'],
                     ],
 
@@ -110,6 +111,11 @@ class ReportController extends Controller
 
     protected function isUserAuthor()
     {
+        $user = User::findOne(Yii::$app->user->id);
+        if($user->childs){
+            return true;
+        }
+        else
         return $this->findModel(Yii::$app->request->get('id'))->user_id == Yii::$app->user->id;
     }
 
@@ -126,6 +132,7 @@ class ReportController extends Controller
         $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
 
         $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+
 
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);

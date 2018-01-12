@@ -42,6 +42,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('sexpiechart'));
+        var my_div = document.getElementById('sexpiechart');
+        google.visualization.events.addListener(chart, 'ready', function () {
+            my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+        });
         chart.draw(data, options);
     }
 
@@ -186,6 +190,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('vicivilpiechart'));
+        var my_div = document.getElementById('vicivilpiechart');
+        google.visualization.events.addListener(chart, 'ready', function () {
+            my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+        });
         chart.draw(data, options);
     }
 
@@ -339,7 +347,7 @@
     действий
 </div>
 
-<div id="visexpiechart" class="piechart"></div>vlb
+<div id="visexpiechart" class="piechart"></div>
 <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по возрасту</div>
 <div id="viagepiechart" class="piechart"></div>
 <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по социальному статусу</div>

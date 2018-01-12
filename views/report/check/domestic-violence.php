@@ -4,7 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 ?>
+<div class="main-heading centre-align">По вопросам домашнего насилия</div>
 <div class="report-type-cover">
+    <?= DetailView::widget([
+        'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
+        'model' => $model,
+        'attributes' => [
+            'vi_general_amount'
+        ],
+    ]) ?>
     <div class="general_heading">
         В том числе по полу:
     </div>
