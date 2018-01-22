@@ -43,11 +43,14 @@ if (!$model->isNewRecord) {
     $civil_refugee = 0;
 }
 ?>
+<div class="clear"></div>
 <div class="report-type-cover">
+
+    <div class="main-heading centre-align">Общая статистика консультаций</div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('general_amount'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'general_amount')->textInput(['value' => $general_amount, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'general_amount')->textInput(['value' => $general_amount, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="general_heading">
@@ -57,12 +60,13 @@ if (!$model->isNewRecord) {
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('men'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'men')->textInput(['value' => $men, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'men')->textInput(['value' => $men, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
+
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('women'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'women')->textInput(['value' => $women, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'women')->textInput(['value' => $women, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 </div>
 <div class="report-type-cover">
@@ -72,22 +76,22 @@ if (!$model->isNewRecord) {
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('age_20'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'age_20')->textInput(['value' => $age_20, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"><?= $form->field($model, 'age_20')->textInput(['value' => $age_20, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('age_21_35'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'age_21_35')->textInput(['value' => $age_21_35, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'age_21_35')->textInput(['value' => $age_21_35, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('age_36_60'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'age_36_60')->textInput(['value' => $age_36_60, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'age_36_60')->textInput(['value' => $age_36_60, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('age_60'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'age_60')->textInput(['value' => $age_60, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'age_60')->textInput(['value' => $age_60, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 </div>
 
@@ -99,32 +103,32 @@ if (!$model->isNewRecord) {
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('social_poor'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'social_poor')->textInput(['value' => $social_poor, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"><?= $form->field($model, 'social_poor')->textInput(['value' => $social_poor, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('social_pensioner'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'social_pensioner')->textInput(['value' => $social_pensioner, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'social_pensioner')->textInput(['value' => $social_pensioner, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('social_worker'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'social_worker')->textInput(['value' => $social_worker, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'social_worker')->textInput(['value' => $social_worker, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('social_unemployed'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'social_unemployed')->textInput(['value' => $social_unemployed, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'social_unemployed')->textInput(['value' => $social_unemployed, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('social_underage'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'social_underage')->textInput(['value' => $social_underage, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"><?= $form->field($model, 'social_underage')->textInput(['value' => $social_underage, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('social_disabled'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'social_disabled')->textInput(['value' => $social_disabled, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'social_disabled')->textInput(['value' => $social_disabled, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 </div>
 
@@ -135,22 +139,24 @@ if (!$model->isNewRecord) {
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('civil_kyrgyz_republic'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'civil_kyrgyz_republic')->textInput(['value' => $civil_kyrgyz_republic, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"><?= $form->field($model, 'civil_kyrgyz_republic')->textInput(['value' => $civil_kyrgyz_republic, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
+</div>
 
+<div class="report-type-cover">
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('civil_foreign'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'civil_foreign')->textInput(['value' => $civil_foreign, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"><?= $form->field($model, 'civil_foreign')->textInput(['value' => $civil_foreign, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('civil_without'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'civil_without')->textInput(['value' => $civil_without, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'civil_without')->textInput(['value' => $civil_without, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('civil_refugee'); ?></label>
-        <div class="col-md-9" <?= $form->field($model, 'civil_refugee')->textInput(['value' => $civil_refugee, 'class' => 'col-md-9 form-control'])->label(false); ?>
+        <div class="col-md-9"> <?= $form->field($model, 'civil_refugee')->textInput(['value' => $civil_refugee, 'class' => 'col-md-9 form-control'])->label(false); ?></div>
     </div>
 </div>
 

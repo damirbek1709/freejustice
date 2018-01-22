@@ -33,8 +33,8 @@
             <td><?= $report->getTotal($dataProvider->models, 'age_20'); ?></td>
         </tr>
         <tr>
-            <th><?= $report->getTotal($dataProvider->models, 'age_21_35'); ?></th>
-            <td>6</td>
+            <th>от 21 до 35 лет</th>
+            <td><?= $report->getTotal($dataProvider->models, 'age_21_35'); ?></td>
         </tr>
         <tr>
             <th>от 36 до 60 лет</th>
@@ -205,6 +205,11 @@
         <tr>
             <th>Вопросы, связанные с домашним насилием</th>
             <td><?= $report->getTotal($dataProvider->models, 'domestic_violence'); ?></td>
+        </tr>
+
+        <tr>
+            <th>Другое</th>
+            <td><?= $report->getTotal($dataProvider->models, 'other'); ?></td>
         </tr>
         </tbody>
     </table>

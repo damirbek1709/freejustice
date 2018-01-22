@@ -34,7 +34,7 @@ class SiteController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index','summary'],
                         'roles' => ['@'],
                     ],
 
@@ -89,5 +89,27 @@ class SiteController extends Controller
             }
         }
     }
+
+
+    public function actionSummary()
+    {
+
+        $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
+        $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
+
+        $year_from = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+        $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+
+        $searchModel = new ReportSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->andFilterWhere(['>=', 'month', $month_from]);
+        $dataProvider->query->andFilterWhere(['>=', 'year', $year_from]);
+
+        $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
+        $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);
+        $dataProvider->query->andFilterWhere(['user_id' => Yii::$app->user->id]);
+        return $this->render('summary_index', ['dataProvider' => $dataProvider]);
+    }
+
 
 }

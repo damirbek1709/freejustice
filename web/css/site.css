@@ -299,3 +299,9 @@ a.desc:after {
     margin-bottom: 20px;
     overflow: hidden;
 }
+.clear{
+    clear: both;
+}
+.report-form-label label{
+    padding-top: 10px;
+}

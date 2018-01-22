@@ -44,6 +44,7 @@ else{
     $vi_general_amount = 0;
 }
 ?>
+<div class="main-heading centre-align">По вопросам домашнего насилия</div>
 <div class="report-type-cover">
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('vi_general_amount'); ?></label>

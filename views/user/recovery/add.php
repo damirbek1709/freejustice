@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('user', 'Добавить пользователя');
 $this->params['breadcrumbs'][] = $this->title;
-$users = ArrayHelper::map(\app\models\User::find()->where(['parent' => 0])->asArray()->all(), 'id', 'username');
+$users = ArrayHelper::map(\app\models\User::find()->where(['parent' => 0])->asArray()->all(), 'id', 'city');
 ?>
 <div class="row">
     <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-3">

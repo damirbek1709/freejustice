@@ -12,7 +12,7 @@ use kartik\tabs\TabsX;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="report-form report-form-type">
+<div class="report-form report-form-type report-form-label">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -77,6 +77,7 @@ use kartik\tabs\TabsX;
         <div class="col-md-9"><?echo $form->field($model, 'month')->dropDownList($month_arr)->label(false);?></div>
     </div>
 
+
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('year'); ?></label>
         <div class="col-md-9"><?echo $form->field($model, 'year')->dropDownList($year_arr)->label(false);?></div>
@@ -96,7 +97,6 @@ use kartik\tabs\TabsX;
     echo $this->render('traning', ['form' => $form, 'model' => $model]);
     ?>
 
-    <div style=""><?= $form->errorSummary($model); ?></div>
     <?php ActiveForm::end(); ?>
 </div>
 
