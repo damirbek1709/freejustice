@@ -78,6 +78,10 @@ use kartik\tabs\TabsX;
     </div>
 
 
+    <div class="col-md-12 vertical-padder">
+        <label class="control-label col-md-3"><?= $model->getAttributeLabel('year'); ?></label>
+        <div class="col-md-9"><?echo $form->field($model, 'year')->dropDownList($year_arr)->label(false);?></div>
+    </div>
 
     <? /*echo TabsX::widget([
         'enableStickyTabs' => true,
