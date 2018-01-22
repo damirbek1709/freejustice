@@ -44,12 +44,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
-            'content' => $this->render('details', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'content' => $this->render('digital', ['report' => $report,'dataProvider'=>$dataProvider]),
             'active' => true,
         ],
         [
             'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
-            'content' => $this->render('graphics', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'content' => $this->render('pre-graphics', ['report' => $report,'dataProvider'=>$dataProvider]),
         ],
 
     ];
@@ -98,6 +98,7 @@ $this->params['breadcrumbs'][] = $this->title;
     echo Html::beginTag('div', ['class' => 'col-md-2 pad-remove-left pad-remove-right']);
     echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary' ,'style'=>'width:100%;text-align:center']);
     echo Html::endTag('div');
+    echo Html::beginForm();
 
     //--   -----------------------------------------------------------------------------------------------------
 

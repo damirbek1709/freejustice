@@ -12,7 +12,7 @@ use kartik\tabs\TabsX;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="report-form report-form-type">
+<div class="report-form report-form-type report-form-label">
 
     <?php $form = ActiveForm::begin(); ?>
 
@@ -49,11 +49,16 @@ use kartik\tabs\TabsX;
 
     $year_arr = [date('Y')=>date('Y')];
     $month = date('m');
-    if($month-1 == 0)
-        $year_arr[]=date('Y', strtotime('-1 year'));
-    echo $form->field($model, 'year')->dropDownList($year_arr);
+    if($month-1 == 0):
+        $year_arr[]=date('Y', strtotime('-1 year'));?>
+    <div class="col-md-12 vertical-padder">
+        <label class="control-label col-md-3"><?= $model->getAttributeLabel('year'); ?></label>
+        <div class="col-md-9"><?echo $form->field($model, 'year')->dropDownList($year_arr)->label(false);?></div>
+    </div>
+    <?php endif;?>
 
-    $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
+
+    <?$month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
         5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
         9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
 
@@ -65,20 +70,29 @@ use kartik\tabs\TabsX;
     } else {
         $model->month = $month;
         echo $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
-    }
+    }?>
 
-    echo $form->field($model, 'month')->dropDownList($month_arr);
+    <div class="col-md-12 vertical-padder">
+        <label class="control-label col-md-3"><?= $model->getAttributeLabel('month'); ?></label>
+        <div class="col-md-9"><?echo $form->field($model, 'month')->dropDownList($month_arr)->label(false);?></div>
+    </div>
 
 
-    echo TabsX::widget([
+
+    <? /*echo TabsX::widget([
         'enableStickyTabs' => true,
         //'position' => TabsX::POS_LEFT,
         'items' => $items,
         'encodeLabels' => false,
         'options' => ['class' => 'tab-margin']
-    ]); ?>
+    ]);*/
+    echo $this->render('general-stats', ['form' => $form, 'model' => $model]);
+    echo $this->render('consult', ['form' => $form, 'model' => $model]);
+    echo $this->render('domestic-violence', ['form' => $form, 'model' => $model]);
+    echo $this->render('operation', ['form' => $form, 'model' => $model]);
+    echo $this->render('traning', ['form' => $form, 'model' => $model]);
+    ?>
 
-    <div style=""><?= $form->errorSummary($model); ?></div>
     <?php ActiveForm::end(); ?>
 </div>
 

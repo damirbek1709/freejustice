@@ -59,6 +59,7 @@ class RecoveryController extends BaseRecoveryController
                 $user->confirmed_at = time();
                 $user->fullname = $_POST['fullmame'];
                 $user->city = $_POST['city'];
+                $user->parent =  $_POST['parent'];
                 $user->save();
                 $this->trigger(self::EVENT_AFTER_REQUEST, $event);
 

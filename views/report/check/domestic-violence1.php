@@ -4,16 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 ?>
-<div class="main-heading centre-align">Общая статистика консультаций</div>
 <div class="report-type-cover">
-
-    <?= DetailView::widget([
-        'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
-        'model' => $model,
-        'attributes' => [
-            'general_amount'
-        ],
-    ]) ?>
     <div class="general_heading">
         В том числе по полу:
     </div>
@@ -22,8 +13,8 @@ use yii\widgets\DetailView;
         'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
         'model' => $model,
         'attributes' => [
-            'men',
-            'women'
+            'vi_men',
+            'vi_women'
         ],
     ]) ?>
 </div>
@@ -35,10 +26,10 @@ use yii\widgets\DetailView;
         'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
         'model' => $model,
         'attributes' => [
-            'age_20',
-            'age_21_35',
-            'age_36_60',
-            'age_60',
+            'vi_age_20',
+            'vi_age_21_35',
+            'vi_age_36_60',
+            'vi_age_60',
         ],
     ]) ?>
 </div>
@@ -52,12 +43,12 @@ use yii\widgets\DetailView;
         'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
         'model' => $model,
         'attributes' => [
-            'social_poor',
-            'social_pensioner',
-            'social_worker',
-            'social_unemployed',
-            'social_underage',
-            'social_disabled',
+            'vi_social_poor',
+            'vi_social_pensioner',
+            'vi_social_worker',
+            'vi_social_unemployed',
+            'vi_social_underage',
+            'vi_social_disabled',
         ],
     ]); ?>
 
@@ -71,20 +62,14 @@ use yii\widgets\DetailView;
         'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
         'model' => $model,
         'attributes' => [
-            'civil_kyrgyz_republic',
-            'civil_foreign',
-            'civil_without',
-            'civil_refugee',
+            'vi_civil_kyrgyz_republic',
+            'vi_civil_foreign',
+            'vi_civil_without',
+            'vi_civil_refugee',
         ],
     ]); ?>
 </div>
-
-<?=$this->render('consult',['model'=>$model]);?>
-<?=$this->render('domestic-violence',['model'=>$model]);?>
-<?=$this->render('operation',['model'=>$model]);?>
-<?=$this->render('traning',['model'=>$model]);?>
-
-
+<?= Html::a('Далее', ["report/{$model->id}#w9-tab3"], ['class' => 'btn btn-primary switch-tab']); ?>
 
 
 

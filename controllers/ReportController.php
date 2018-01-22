@@ -2,15 +2,18 @@
 
 namespace app\controllers;
 
+use app\models\User;
 use Yii;
 use app\models\Report;
 use app\models\ReportSearch;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\HttpException;
 use yii\filters\AccessControl;
 use dektrium\user\filters\AccessRule;
+use kartik\mpdf\Pdf;
 
 /**
  * ReportController implements the CRUD actions for Report model.
@@ -31,12 +34,12 @@ class ReportController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create'],
+                        'actions' => ['create','export'],
                         'roles' => ['@', 'admin'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['view','index'],
+                        'actions' => ['index'],
                         'roles' => ['@'],
                     ],
 
@@ -51,7 +54,6 @@ class ReportController extends Controller
                             return false;
                         }
                     ],
-
                     [
                         'allow' => true,
                         'actions' => ['index','city'],
@@ -62,8 +64,58 @@ class ReportController extends Controller
         ];
     }
 
+    public function actionExport($layout) {
+
+        $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
+        $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
+
+        $year_from = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+        $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+
+        $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+
+        $searchModel = new ReportSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $dataProvider->query->andFilterWhere(['>=','month', $month_from]);
+        $dataProvider->query->andFilterWhere(['>=','year', $year_from]);
+
+        $dataProvider->query->andFilterWhere(['<=','month', $month_till]);
+        $dataProvider->query->andFilterWhere(['<=','year', $year_till]);
+
+        if(!Yii::$app->user->identity->isAdmin){
+            $centre = Yii::$app->user->id;
+        }
+        $report = new Report();
+        $dataProvider->query->andFilterWhere(['user_id' => $centre]);
+
+        $pdf = new Pdf([
+            'mode' => '', // leaner size using standard fonts
+            'content' => $this->renderPartial($layout,[
+                'report' => $report,
+                'dataProvider' => $dataProvider,
+            ]),
+            'cssFile' => '@webroot/css/pdf.css',
+            'options' => [
+                'title' => "Цифровой отчет всех центров от ".$report->getMonth($month_from)." ".$year_from." до ". $report->getMonth($month_till)." ".$year_till,
+                'subject' => 'Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР'
+            ],
+            'methods' => [
+                'SetHeader' => ['Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР ' . date("Y-m-d")],
+                'SetFooter' => ['|{PAGENO}|'],
+            ],
+        ]);
+        return $pdf->render();
+    }
+
+
     protected function isUserAuthor()
     {
+        $user = User::findOne(Yii::$app->user->id);
+        if($user->childs){
+            return true;
+        }
+        else
         return $this->findModel(Yii::$app->request->get('id'))->user_id == Yii::$app->user->id;
     }
 
@@ -80,6 +132,7 @@ class ReportController extends Controller
         $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
 
         $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+
 
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -189,7 +242,6 @@ class ReportController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
-
         return $this->redirect(['site/index']);
     }
 

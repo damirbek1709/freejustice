@@ -6,6 +6,7 @@
 
 use app\widgets\Alert;
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
@@ -44,13 +45,30 @@ AppAsset::register($this);
     } else {
         $items_arr = [
             ['label' => 'Мои отчеты', 'url' => ['/site/index']],
+            ['label' => 'Сводный отчет', 'url' => ['/site/summary']],
             ['label' => 'Добавить отчет', 'url' => ['/report/create']],
             ['label' => 'Выход', 'url' => ['/user/logout'],
                 'linkOptions' => ['data-method' => 'post']]
         ];
     } ?>
-    <div class="container">
-        <div class="col-md-3">
+    <div class="container" style="padding: 10px 0 15px">
+        <div class="col-md-12 shapka">
+            <div class="col-md-3" style="padding-left: 0;">
+                <?= Html::a(Html::img(Url::base() . '/images/site/logo.png'), ['/site/index'], ['class' => 'logo']); ?>
+            </div>
+
+            <div class="col-md-6">
+                <div class="general_heading">Центр по оказании бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР</div>
+            </div>
+            <div class="col-md-3" style="text-align: right;">
+                <?=Html::a('Выход',['/user/logout'],['class'=>'logout-link','data-method'=>'post']);?>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container" style="padding-top: 25px;">
+        <div class="left-bar col-md-3">
             <?php
             echo Nav::widget([
                 'options' => [
@@ -76,10 +94,11 @@ AppAsset::register($this);
         ?>
 
 
-        <div class="col-md-9"><?= Breadcrumbs::widget([
+        <div class="col-md-9">
+            <? /*= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
-            <?= Alert::widget() ?>
+            <?= Alert::widget()*/ ?>
             <?= $content ?>
         </div>
     </div>

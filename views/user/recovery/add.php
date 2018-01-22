@@ -10,6 +10,7 @@
  */
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\widgets\ActiveForm;
 
 /**
@@ -20,6 +21,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('user', 'Добавить пользователя');
 $this->params['breadcrumbs'][] = $this->title;
+$users = ArrayHelper::map(\app\models\User::find()->where(['parent' => 0])->asArray()->all(), 'id', 'city');
 ?>
 <div class="row">
     <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-3">
@@ -44,6 +46,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     <label class="control-label">Место</label>
                     <input class="form-control" type="text" id="maxArea" name="city">
                 </div>
+
+                <div class="form-group">
+                    <label class="control-label">Региональный администратор</label>
+                    <select name="parent">
+                        <option value="0">Региональнай администратор</option>
+                        <?php
+                        foreach ($users as $key => $val) {
+                            echo Html::tag('option', $val, ['value' => $key]);
+                        }
+                        ?>
+                    </select>
+                </div>
+
 
                 <div class="form-group">
                     <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary btn-block']) ?><br>
