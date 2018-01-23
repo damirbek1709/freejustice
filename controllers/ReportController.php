@@ -34,7 +34,7 @@ class ReportController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create','export'],
+                        'actions' => ['create', 'export'],
                         'roles' => ['@', 'admin'],
                     ],
                     [
@@ -45,7 +45,7 @@ class ReportController extends Controller
 
                     [
                         'allow' => true,
-                        'actions' => ['update', 'delete', 'view','city'],
+                        'actions' => ['update', 'delete', 'view', 'city'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             if ((!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) || $this->isUserAuthor()) {
@@ -56,7 +56,7 @@ class ReportController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index','city'],
+                        'actions' => ['index', 'city'],
                         'roles' => ['admin'],
                     ],
                 ],
@@ -64,7 +64,8 @@ class ReportController extends Controller
         ];
     }
 
-    public function actionExport($layout) {
+    public function actionExport($layout)
+    {
 
         $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
         $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
@@ -77,13 +78,13 @@ class ReportController extends Controller
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $dataProvider->query->andFilterWhere(['>=','month', $month_from]);
-        $dataProvider->query->andFilterWhere(['>=','year', $year_from]);
+        $dataProvider->query->andFilterWhere(['>=', 'month', $month_from]);
+        $dataProvider->query->andFilterWhere(['>=', 'year', $year_from]);
 
-        $dataProvider->query->andFilterWhere(['<=','month', $month_till]);
-        $dataProvider->query->andFilterWhere(['<=','year', $year_till]);
+        $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
+        $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);
 
-        if(!Yii::$app->user->identity->isAdmin){
+        if (!Yii::$app->user->identity->isAdmin) {
             $centre = Yii::$app->user->id;
         }
         $report = new Report();
@@ -91,13 +92,13 @@ class ReportController extends Controller
 
         $pdf = new Pdf([
             'mode' => '', // leaner size using standard fonts
-            'content' => $this->renderPartial($layout,[
+            'content' => $this->renderPartial($layout, [
                 'report' => $report,
                 'dataProvider' => $dataProvider,
             ]),
             'cssFile' => '@webroot/css/pdf.css',
             'options' => [
-                'title' => "Цифровой отчет всех центров от ".$report->getMonth($month_from)." ".$year_from." до ". $report->getMonth($month_till)." ".$year_till,
+                'title' => "Цифровой отчет всех центров от " . $report->getMonth($month_from) . " " . $year_from . " до " . $report->getMonth($month_till) . " " . $year_till,
                 'subject' => 'Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР'
             ],
             'methods' => [
@@ -112,11 +113,10 @@ class ReportController extends Controller
     protected function isUserAuthor()
     {
         $user = User::findOne(Yii::$app->user->id);
-        if($user->childs){
+        if ($user->childs) {
             return true;
-        }
-        else
-        return $this->findModel(Yii::$app->request->get('id'))->user_id == Yii::$app->user->id;
+        } else
+            return $this->findModel(Yii::$app->request->get('id'))->user_id == Yii::$app->user->id;
     }
 
     /**
@@ -128,7 +128,7 @@ class ReportController extends Controller
         $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
         $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
 
-        $year_from = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+        $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : "";
         $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
 
         $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
@@ -137,13 +137,24 @@ class ReportController extends Controller
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $dataProvider->query->andFilterWhere(['>=','month', $month_from]);
-        $dataProvider->query->andFilterWhere(['>=','year', $year_from]);
 
-        $dataProvider->query->andFilterWhere(['<=','month', $month_till]);
-        $dataProvider->query->andFilterWhere(['<=','year', $year_till]);
+        $start_date = $year_from."-".$month_from."-01";
+        $start_date = date("Y-m-d", strtotime($start_date));
 
-        if(!Yii::$app->user->identity->isAdmin){
+        $end_date = $year_till."-".$month_till."-28";
+        $end_date = date("Y-m-d", strtotime($end_date));
+
+        $dataProvider->query->andFilterWhere(['between', 'sort_date', $start_date, $end_date]);
+
+       // ->where(['between', 'date', $start, $end])
+
+        /*$dataProvider->query->andFilterWhere(['>=', 'month', $month_from]);
+        $dataProvider->query->andFilterWhere(['>=', 'year', $year_from]);
+
+        $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
+        $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);*/
+
+        if (!Yii::$app->user->identity->isAdmin) {
             $centre = Yii::$app->user->id;
         }
 
@@ -155,15 +166,22 @@ class ReportController extends Controller
         ]);
     }
 
+    public function actionTable()
+    {
+
+    }
+
     public function actionCity($id)
     {
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['user_id'=>$id]);
+        $dataProvider->query->andFilterWhere(['user_id' => $id]);
+        $city = User::findOne($id);
 
         return $this->render('city', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'city' => $city->city
         ]);
     }
 
@@ -175,8 +193,11 @@ class ReportController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $city = $model->user->city;
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'city' => $city,
         ]);
     }
 
@@ -189,11 +210,12 @@ class ReportController extends Controller
     {
         $model = new Report();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            if(Yii::$app->user->identity->isAdmin) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->sort_date = $model->year . "-" . $model->month . "-28";
+            $model->save();
+            if (Yii::$app->user->identity->isAdmin) {
                 return $this->redirect(['city', 'id' => $model->user_id]);
-            }
-            else{
+            } else {
                 return $this->redirect(['/site/index']);
             }
         }
@@ -213,21 +235,24 @@ class ReportController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $city = $model->user->city;
         $d = date_parse_from_format("Y-m-d", $model->date_created);
         if (date('m') - $d['month'] > 2) {
             throw new NotFoundHttpException("Истек срок редактирования данного отчета");
         } else {
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                if(Yii::$app->user->identity->isAdmin) {
+            if ($model->load(Yii::$app->request->post())) {
+                $model->sort_date = $model->year . "-" . $model->month . "-28";
+                $model->save();
+                if (Yii::$app->user->identity->isAdmin) {
                     return $this->redirect(['city', 'id' => $model->user_id]);
-                }
-                else{
+                } else {
                     return $this->redirect(['/site/index']);
                 }
             }
 
             return $this->render('update', [
                 'model' => $model,
+                'city' => $city
             ]);
         }
     }

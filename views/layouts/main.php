@@ -42,7 +42,7 @@ AppAsset::register($this);
 //            ['label' => 'Выход', 'url' => ['/user/logout'],
 //                'linkOptions' => ['data-method' => 'post']]
         ];
-    } else {
+    } elseif (!Yii::$app->user->isGuest && Yii::$app->user->identity->parent!=0) {
         $items_arr = [
             ['label' => 'Мои отчеты', 'url' => ['/site/index']],
             ['label' => 'Сводный отчет', 'url' => ['/site/summary']],
@@ -50,7 +50,18 @@ AppAsset::register($this);
             ['label' => 'Выход', 'url' => ['/user/logout'],
                 'linkOptions' => ['data-method' => 'post']]
         ];
-    } ?>
+    }
+
+    elseif (!Yii::$app->user->isGuest && Yii::$app->user->identity->parent==0) {
+        $items_arr = [
+            ['label' => 'Центры', 'url' => ['/site/index']],
+            ['label' => 'Сводный отчет', 'url' => ['/site/summary']],
+            ['label' => 'Добавить отчет', 'url' => ['/report/create']],
+            ['label' => 'Выход', 'url' => ['/user/logout'],
+                'linkOptions' => ['data-method' => 'post']]
+        ];
+    }
+    ?>
     <div class="container" style="padding: 10px 0 15px">
         <div class="col-md-12 shapka">
             <div class="col-md-3" style="padding-left: 0;">

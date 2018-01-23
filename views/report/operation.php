@@ -3,6 +3,7 @@ $link = "create";
 if(!$model->isNewRecord)
     $link = "report/update/".$model->id;
 ?>
+<div class="main-heading centre-align">Технические / Операционные условия:</div>
 
 <?=$form->field($model, 'equipment_issue')->radioList([1 => 'Да', 0 =>'Нет'], ['class' => 'i-checks']);?>
 <?= $form->field($model, 'equipment_issue_comment')->textarea(['maxlength' => true,'rows'=>5,'class'=>'fader equip-fader form-control','placeholder'=>'Пожалуйста опишите проблему в деталях'])->label(false) ?>

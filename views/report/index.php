@@ -109,12 +109,15 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-12 pad-remove top-20-marginer">
         <?
-        echo TabsX::widget([
-            'enableStickyTabs' => true,
-            'items' => $items,
-            'encodeLabels' => false,
-            'options' => ['class' => 'tab-margin']
-        ]); ?>
+        if(isset($_GET["month_from"])) {
+            echo TabsX::widget([
+                'enableStickyTabs' => true,
+                'items' => $items,
+                'encodeLabels' => false,
+                'options' => ['class' => 'tab-margin']
+            ]);
+        }
+        ?>
     </div>
 
 </div>

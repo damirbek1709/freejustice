@@ -10,20 +10,22 @@ $this->title = 'Мои отчеты';
 ?>
 <div class="site-index">
 
-<?php
-echo Html::a('Добавить',['/user/add'],['class'=>'btn btn-success']);
-echo Html::tag('div','',['class'=>'clear']);
-$items = ArrayHelper::map($reportModel,'id','city');
-$result = array_unique($items);
+    <?php
+    if (Yii::$app->user->identity->isAdmin) {
+        echo Html::a('Добавить', ['/user/add'], ['class' => 'btn btn-success']);
+    }
+    echo Html::tag('div', '', ['class' => 'clear']);
+    $items = ArrayHelper::map($reportModel, 'id', 'city');
+    $result = array_unique($items);
 
-foreach ($result as $key=>$val) {
-    echo Html::beginTag('div',['class'=>'col-md-3 pad-lim']);
-    echo Html::a($val,['/report/city','id'=>$key]);
-    echo Html::endTag('div');
-}
-?>
+    foreach ($result as $key => $val) {
+        echo Html::beginTag('div', ['class' => 'col-md-3 pad-lim']);
+        echo Html::a($val, ['/report/city', 'id' => $key]);
+        echo Html::endTag('div');
+    }
+    ?>
 
-    <?/*= GridView::widget([
+    <? /*= GridView::widget([
         'dataProvider' => $dataProvider,
         'summary'=>false,
         'columns' => [

@@ -12,11 +12,13 @@ $this->title = Yii::t('app', 'Reports');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="report-index">
-
+    <div class="main-heading" style="text-align: left">
+        <?= $city ?>
+    </div>
     <?php
     echo ListView::widget([
         'dataProvider' => $dataProvider,
-        'summary'=>false,
+        'summary' => false,
         'options' => [
             'class' => 'list-wrapper',
         ],
@@ -27,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]);
     ?>
 
-    <?/*= GridView::widget([
+    <? /*= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -40,5 +42,5 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); */?>
+    ]); */ ?>
 </div>

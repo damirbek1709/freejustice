@@ -34,7 +34,7 @@ class SiteController extends Controller
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index','summary'],
+                        'actions' => ['index', 'summary'],
                         'roles' => ['@'],
                     ],
 
@@ -97,17 +97,36 @@ class SiteController extends Controller
         $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
         $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
 
-        $year_from = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+        $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : "";
         $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
+
+        $start_date = $year_from . "-" . $month_from . "-01";
+        $start_date = date("Y-m-d", strtotime($start_date));
+
+        $end_date = $year_till . "-" . $month_till . "-28";
+        $end_date = date("Y-m-d", strtotime($end_date));
 
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->andFilterWhere(['>=', 'month', $month_from]);
-        $dataProvider->query->andFilterWhere(['>=', 'year', $year_from]);
 
-        $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
-        $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);
-        $dataProvider->query->andFilterWhere(['user_id' => Yii::$app->user->id]);
+        if (isset($_GET['centre'])) {
+            $centre = $_GET['centre'];
+            $dataProvider->query->andFilterWhere(['user_id' => $centre]);
+        } else {
+            $centre_arr = \app\models\User::find()
+                ->select(['id'])
+                ->andFilterWhere(['parent' => Yii::$app->user->id])
+                ->asArray()->all();
+            $dataProvider->query->andFilterWhere(['user_id' => $centre_arr]);
+        }
+
+
+        //$dataProvider->query->andFilterWhere(['user_id' => $centre_arr]);
+
+        $dataProvider->query->andFilterWhere(['between', 'sort_date', $start_date, $end_date]);
+
+
+
         return $this->render('summary_index', ['dataProvider' => $dataProvider]);
     }
 

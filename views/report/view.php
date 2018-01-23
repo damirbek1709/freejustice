@@ -7,7 +7,7 @@ use kartik\tabs\TabsX;
 /* @var $this yii\web\View */
 /* @var $model app\models\Report */
 
-$this->title = $model->getMonth($model->month)." ".$model->year;
+$this->title = $city." - ".$model->getMonth($model->month)." ".$model->year;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="report-view report-form-type">

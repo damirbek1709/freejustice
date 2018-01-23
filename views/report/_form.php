@@ -47,21 +47,21 @@ use kartik\tabs\TabsX;
         ],
     ];
 
-    $year_arr = [date('Y')=>date('Y')];
+    $year_arr = [date('Y') => date('Y')];
     $month = date('m');
-    if($month-1 == 0):
-        $year_arr[]=date('Y', strtotime('-1 year'));?>
-    <div class="col-md-12 vertical-padder">
-        <label class="control-label col-md-3"><?= $model->getAttributeLabel('year'); ?></label>
-        <div class="col-md-9"><?echo $form->field($model, 'year')->dropDownList($year_arr)->label(false);?></div>
-    </div>
-    <?php endif;?>
+    if ($month - 1 == 0):
+        $year_arr = [date('Y') => date('Y'), date('Y', strtotime('-1 year')) => date('Y', strtotime('-1 year'))];
+        ?>
+        <div class="col-md-12 vertical-padder">
+            <label class="control-label col-md-3"><?= $model->getAttributeLabel('year'); ?></label>
+            <div class="col-md-9"><? echo $form->field($model, 'year')->dropDownList($year_arr)->label(false); ?></div>
+        </div>
+    <?php endif; ?>
 
 
-    <?$month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
+    <? $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
         5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
         9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
-
 
 
     if (!$model->isNewRecord) {
@@ -70,18 +70,13 @@ use kartik\tabs\TabsX;
     } else {
         $model->month = $month;
         echo $form->field($model, 'user_id')->hiddenInput(['value' => Yii::$app->user->id])->label(false);
-    }?>
+    } ?>
 
     <div class="col-md-12 vertical-padder">
         <label class="control-label col-md-3"><?= $model->getAttributeLabel('month'); ?></label>
-        <div class="col-md-9"><?echo $form->field($model, 'month')->dropDownList($month_arr)->label(false);?></div>
+        <div class="col-md-9"><? echo $form->field($model, 'month')->dropDownList($month_arr)->label(false); ?></div>
     </div>
 
-
-    <div class="col-md-12 vertical-padder">
-        <label class="control-label col-md-3"><?= $model->getAttributeLabel('year'); ?></label>
-        <div class="col-md-9"><?echo $form->field($model, 'year')->dropDownList($year_arr)->label(false);?></div>
-    </div>
 
     <? /*echo TabsX::widget([
         'enableStickyTabs' => true,

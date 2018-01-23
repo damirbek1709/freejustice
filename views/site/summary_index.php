@@ -9,7 +9,7 @@ use kartik\tabs\TabsX;
 
 /* @var $this yii\web\View */
 
-$this->title = 'Мои отчеты';
+$this->title = 'Отчеты';
 ?>
 <div class="site-index">
     <?php
@@ -24,16 +24,24 @@ $this->title = 'Мои отчеты';
     ];
 
 
+    $centre_arr = ArrayHelper::map(\app\models\User::find()
+        ->select(['id', 'city'])
+        ->andFilterWhere(['parent'=>Yii::$app->user->id])
+        ->asArray()->all(),
+        'id', 'city');
+
+
     $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : 1;
     $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : 12;
 
     $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : date('Y');
     $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : date('Y');
 
+    $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
 
     echo Html::beginTag('div', ['class' => 'filter-wrapper']);
     echo Html::beginForm(['site/summary'], 'get', ['class' => '']);
-    echo Html::beginTag('div', ['class' => 'col-md-5 pad-remove']);
+    echo Html::beginTag('div', ['class' => 'col-md-6 pad-remove']);
 
     echo Html::tag('div', 'От', ['class' => 'col-md-2 label-siding']);
 
@@ -50,7 +58,7 @@ $this->title = 'Мои отчеты';
 
     /*-------------------------------------------------------------------------------------------------*/
 
-    echo Html::beginTag('div', ['class' => 'col-md-5 pad-remove']);
+    echo Html::beginTag('div', ['class' => 'col-md-6 pad-remove']);
 
     echo Html::tag('div', '- до', ['class' => 'col-md-2 label-siding']);
 
@@ -62,9 +70,19 @@ $this->title = 'Мои отчеты';
     echo Html::dropDownList('year_till', $year_till, $year_arr, ['class' => 'form-control']);
     echo Html::endTag('div');
 
+    echo Html::endTag('div');?>
+
+
+   <div class="clear" style="margin-top: 10px;"></div>
+
+    <?
+    echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
+    echo Html::beginTag('div', ['class' => 'col-md-12 ']);
+    echo Html::dropDownList('centre', $centre, $centre_arr, ['class' => 'form-control', 'prompt' => 'Все']);
+    echo Html::endTag('div');
     echo Html::endTag('div');
 
-    echo Html::beginTag('div', ['class' => 'col-md-2 pad-remove']);
+    echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
     echo Html::beginTag('div', ['class' => 'col-md-12 ']);
     echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'width:100%;text-align:center']);
     echo Html::endTag('div');
