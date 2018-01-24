@@ -75,6 +75,8 @@ use app\models\User;
  */
 class Report extends \yii\db\ActiveRecord
 {
+    public $userType;
+
     /**
      * @inheritdoc
      */
@@ -92,21 +94,44 @@ class Report extends \yii\db\ActiveRecord
         return $total;
     }
 
+
+
+
+    public function getDropdownItems($parentId = 0, $level = 0)
+    {
+        $itemsFormatted = array();
+
+        $items = User::find()->andWhere(['parent' => $parentId])->andFilterWhere(['!=','id',75])->all();
+
+        foreach ($items as $item) {
+            $children = User::find()->where("parent=:parent_id", [":parent_id"=>$item->id])->all();
+            $child_options = [];
+            foreach($children as $child) {
+                $child_options[$child->id] = $child->city;
+            }
+            $itemsFormatted[$item->city] = $child_options;
+            //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
+        }
+
+        return $itemsFormatted;
+    }
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['user_id','month','year', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue'],'required'],
-            [['general_amount','other','vi_general_amount','date_created','date_updated','user_id', 'month', 'equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment', 'traning_issue','sort_date'], 'safe'],
-            [['general_amount','vi_general_amount','user_id', 'month', 'legacy', 'donation_register', 'private_property', 'entity_registration', 'civil_contract', 'trade_contract', 'donation_contract', 'authority_procedural_action', 'family_law', 'labor_disputes', 'land_disputes', 'housing_disputes', 'social_protection', 'criminal_case', 'administrative_offense', 'moral_material_harm', 'divorce', 'alimony', 'identity_document', 'domestic_violence', 'men', 'women', 'age_20', 'age_21_35', 'age_36_60', 'age_60', 'social_poor', 'social_pensioner', 'social_worker', 'social_unemployed', 'social_underage', 'social_disabled', 'civil_kyrgyz_republic', 'civil_foreign', 'civil_without', 'civil_refugee', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'vi_men', 'vi_women', 'vi_age_20', 'vi_age_21_35', 'vi_age_36_60', 'vi_age_60', 'vi_social_poor', 'vi_social_pensioner', 'vi_social_worker', 'vi_social_unemployed', 'vi_social_underage', 'vi_social_disabled', 'vi_civil_kyrgyz_republic', 'vi_civil_foreign', 'vi_civil_without', 'vi_civil_refugee'], 'integer'],
+            [['user_id', 'month', 'year', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'userType'], 'required'],
+            [['general_amount', 'other', 'vi_general_amount', 'date_created', 'date_updated', 'user_id', 'month', 'equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment', 'traning_issue', 'sort_date'], 'safe'],
+            [['general_amount', 'vi_general_amount', 'user_id', 'month', 'legacy', 'donation_register', 'private_property', 'entity_registration', 'civil_contract', 'trade_contract', 'donation_contract', 'authority_procedural_action', 'family_law', 'labor_disputes', 'land_disputes', 'housing_disputes', 'social_protection', 'criminal_case', 'administrative_offense', 'moral_material_harm', 'divorce', 'alimony', 'identity_document', 'domestic_violence', 'men', 'women', 'age_20', 'age_21_35', 'age_36_60', 'age_60', 'social_poor', 'social_pensioner', 'social_worker', 'social_unemployed', 'social_underage', 'social_disabled', 'civil_kyrgyz_republic', 'civil_foreign', 'civil_without', 'civil_refugee', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'vi_men', 'vi_women', 'vi_age_20', 'vi_age_21_35', 'vi_age_36_60', 'vi_age_60', 'vi_social_poor', 'vi_social_pensioner', 'vi_social_worker', 'vi_social_unemployed', 'vi_social_underage', 'vi_social_disabled', 'vi_civil_kyrgyz_republic', 'vi_civil_foreign', 'vi_civil_without', 'vi_civil_refugee'], 'integer'],
             [['traning_issue'], 'string'],
             [['equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment'], 'string', 'max' => 1000],
         ];
     }
 
-    public function getMonth($num){
+    public function getMonth($num)
+    {
         $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
             5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
             9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
@@ -119,16 +144,14 @@ class Report extends \yii\db\ActiveRecord
     }
 
 
-
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
             $this->date_created = date("Y-m-d");
             $this->date_updated = date("Y-m-d");
+        } else {
+            $this->date_updated = date("Y-m-d");
         }
-       else{
-           $this->date_updated = date("Y-m-d");
-       }
         return parent::beforeSave($insert);
     }
 

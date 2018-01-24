@@ -18,6 +18,7 @@ use dektrium\user\models\RecoveryForm as BaseRecoveryForm;
 class RecoveryForm extends BaseRecoveryForm
 {
     public $parent;
+    public $usertype;
     /**
      * @inheritdoc
      */
@@ -25,6 +26,7 @@ class RecoveryForm extends BaseRecoveryForm
     {
         $rules = parent::rules();
         $rules['fieldRequired'] = ['parent', 'required'];
+        $rules['fieldRequired'] = ['usertype', 'required'];
         $rules['fieldLength']   = ['parent', 'string', 'max' => 10];
         return $rules;
     }

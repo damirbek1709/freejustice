@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use app\models\Report;
+use app\models\User;
 use kartik\tabs\TabsX;
 
 /* @var $this yii\web\View */
@@ -29,7 +30,6 @@ $this->params['breadcrumbs'][] = $this->title;
         date('Y', strtotime('-1 year')) => date('Y', strtotime('-1 year')),
         date('Y', strtotime('-2 year')) => date('Y', strtotime('-2 year'))
     ];
-    $user =
     $centre_arr = ArrayHelper::map(\app\models\User::find()
         ->select(['id', 'city'])
         ->andFilterWhere(['!=', 'id', 1])
@@ -105,14 +105,30 @@ $this->params['breadcrumbs'][] = $this->title;
     echo Html::endTag('div');
 
     /*-------------------------------------------------------------------------------------------------*/
-    echo Html::tag('div','',['class'=>'col-md-12 top-20-marginer']);
+    echo Html::tag('div', '', ['class' => 'col-md-12 top-20-marginer']);
 
-    echo Html::beginTag('div', ['class' => 'col-md-4 pad-remove-left']);
-    echo Html::dropDownList('centre', $centre, $centre_arr, ['class' => 'form-control', 'prompt' => 'Все']);
-    echo Html::endTag('div');
+    echo Html::beginTag('div', ['class' => 'col-md-4 pad-remove-left']);?>
+
+   <select class="form-control" name="centre">
+        <option value="">Место</option>
+        <?php
+        $items2 = User::find()->andWhere(['parent' => 0])->andFilterWhere(['!=','id',75])->all();
+
+        foreach ($items2 as $item) {
+            $children = User::find()->where("parent=:parent_id", [":parent_id"=>$item->id])->all();
+            echo Html::tag('option',$item->city,['value'=>$item->id,'class'=>'optionGroup']);
+            foreach($children as $child) {
+                echo Html::tag('option',"  &nbsp;&nbsp;&nbsp;&nbsp;".$child->city,['value'=>$child->id,'class'=>'optionChild']);
+            }
+            //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
+        }
+        ?>
+    </select>
+
+    <? echo Html::endTag('div');
 
     echo Html::beginTag('div', ['class' => 'col-md-2 pad-remove-left pad-remove-right']);
-    echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary' ,'style'=>'width:100%;text-align:center']);
+    echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary', 'style' => 'width:100%;text-align:center']);
     echo Html::endTag('div');
     echo Html::endForm();
 
@@ -130,7 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <div class="col-md-12 pad-remove top-20-marginer">
         <?
-        if(isset($_GET["month_from"])) {
+        if (isset($_GET["month_from"])) {
             echo TabsX::widget([
                 'enableStickyTabs' => true,
                 'items' => $items,

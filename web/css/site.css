@@ -321,3 +321,15 @@ div.font16{font-size:16px;}
 div.font18{font-size:18px;}
 .bold{font-weight:bold;}
 .play{font-family:Play, sans-serif;}
+
+.reg-admin{
+    display: none;
+}
+
+.optionGroup {
+    font-weight: bold;
+}
+
+.optionChild {
+    padding-left: 15px;
+}

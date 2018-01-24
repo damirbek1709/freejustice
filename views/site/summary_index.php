@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\widgets\ListView;
 use app\models\Report;
+use app\models\User;
 use kartik\tabs\TabsX;
 
 /* @var $this yii\web\View */
@@ -26,7 +27,7 @@ $this->title = 'Отчеты';
 
     $centre_arr = ArrayHelper::map(\app\models\User::find()
         ->select(['id', 'city'])
-        ->andFilterWhere(['parent'=>Yii::$app->user->id])
+        ->andFilterWhere(['parent' => Yii::$app->user->id])
         ->asArray()->all(),
         'id', 'city');
 
@@ -37,7 +38,11 @@ $this->title = 'Отчеты';
     $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : date('Y');
     $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : date('Y');
 
-    $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+    if (isset($_GET["centre"]) && Yii::$app->user->identity->parent == 0) {
+        $centre = $_GET["centre"];
+    } else {
+        $centre = Yii::$app->user->id;
+    }
 
     echo Html::beginTag('div', ['class' => 'filter-wrapper']);
     echo Html::beginForm(['site/summary'], 'get', ['class' => '']);
@@ -70,17 +75,44 @@ $this->title = 'Отчеты';
     echo Html::dropDownList('year_till', $year_till, $year_arr, ['class' => 'form-control']);
     echo Html::endTag('div');
 
-    echo Html::endTag('div');?>
+    echo Html::endTag('div'); ?>
 
 
-   <div class="clear" style="margin-top: 10px;"></div>
+    <div class="clear" style="margin-top: 10px;"></div>
 
     <?
-    echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
-    echo Html::beginTag('div', ['class' => 'col-md-12 ']);
-    echo Html::dropDownList('centre', $centre, $centre_arr, ['class' => 'form-control', 'prompt' => 'Все']);
-    echo Html::endTag('div');
-    echo Html::endTag('div');
+    $report = new Report();
+    if (Yii::$app->user->identity->parent == 0) :
+        echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
+
+        echo Html::beginTag('div', ['class' => 'col-md-12 ']); ?>
+
+        <select class="form-control" name="centre">
+            <option value="">Место</option>
+            <?php
+            $item2 = User::findOne(Yii::$app->user->id);
+
+            if ($item2) {
+                echo Html::tag('option', $item2->city, ['value' => $item2->id, 'class' => 'optionGroup']);
+            }
+            $children = User::find()->where("parent=:parent_id", [":parent_id" => Yii::$app->user->id])->all();
+
+            foreach ($children as $child) {
+                if ($child)
+                    echo Html::tag('option', "  &nbsp;&nbsp;&nbsp;&nbsp;" . $child->city, ['value' => $child->id, 'class' => 'optionChild']);
+            }
+            //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
+
+            ?>
+        </select>
+
+        <? echo Html::endTag('div');
+        echo Html::endTag('div');
+    else :
+
+    echo Html::hiddenInput('centre', $centre);
+    endif;
+
 
     echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
     echo Html::beginTag('div', ['class' => 'col-md-12 ']);
@@ -92,7 +124,7 @@ $this->title = 'Отчеты';
     echo Html::endForm();
     echo Html::endTag('div');
 
-    $report = new Report();
+
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
