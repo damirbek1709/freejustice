@@ -70,7 +70,7 @@ $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 
                 </div>
 
 
-                <div class="form-group">
+                <div class="form-group radio-list-user">
                     <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary btn-block']) ?><br>
                 </div>
                 <?php ActiveForm::end(); ?>
@@ -80,6 +80,10 @@ $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 
 </div>
 
 <script type="text/javascript">
+    if(!$('input:radio[name="userType"]').is(':checked')){
+        $('.btn-block').preventDefault();
+        $('.radio-list-user').addClass('has-error');
+    }
     $('input:radio[name="userType"]').change(
         function(){
             if ($(this).is(':checked') && $(this).val() == 2) {
