@@ -313,9 +313,14 @@ a.desc:after {
         border: none;
     }
     .print-page-break {page-break-after: always;}
+    .tab-icon {
+        display: inline;
+        width: auto;
+    }
 }
 div.mt0{margin-top:0;}
 div.mb0{margin-bottom:0;}
+div.mb10{margin-bottom:10px;}
 div.mb20{margin-bottom:20px;}
 div.font16{font-size:16px;}
 div.font18{font-size:18px;}

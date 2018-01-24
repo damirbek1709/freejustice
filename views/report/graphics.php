@@ -374,64 +374,67 @@ if($images=Yii::$app->request->post('test')){
     }
 }
 ?>
-<form action="/report/export-graph" method="post">
-    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
-    <input name='range' type="hidden" value="<?=$range?>" />
-    <input name='sex' id='sexpiechart_input' type="hidden" />
-    <input name='age' id='agepiechart_input' type="hidden" />
-    <input name='social' id='socialpiechart_input' type="hidden" />
-    <input name='civil' id='civilpiechart_input' type="hidden" />
-    <input name='consult' id='consultbarchart_input' type="hidden" />
+<div class="graphics_view">
+    <button id="print_graphics" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
+    <form action="/report/export-graph" method="post">
+        <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
+        <input name='range' type="hidden" value="<?=$range?>" />
+        <input name='sex' id='sexpiechart_input' type="hidden" />
+        <input name='age' id='agepiechart_input' type="hidden" />
+        <input name='social' id='socialpiechart_input' type="hidden" />
+        <input name='civil' id='civilpiechart_input' type="hidden" />
+        <input name='consult' id='consultbarchart_input' type="hidden" />
 
-    <input name='sex_vi' id='sex_vi_input' type="hidden" />
-    <input name='age_vi' id='age_vi_input' type="hidden" />
-    <input name='social_vi' id='social_vi_input' type="hidden" />
-    <input name='civil_vi' id='civil_vi_input' type="hidden" />
-    <button type="submit" class="btn btn-primary hidden-print" formtarget="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF</button>
-</form>
-<!--<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по полу</div>
-<div id="sexpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по возрасту</div>
-<div id="agepiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по социальному статусу</div>
-<div id="socialpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций гражданскому статусу</div>
-<div id="civilpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Вопросы предоставленных консультаций</div>
-<div id="consultbarchart" class="barchart"></div>
+        <input name='sex_vi' id='sex_vi_input' type="hidden" />
+        <input name='age_vi' id='age_vi_input' type="hidden" />
+        <input name='social_vi' id='social_vi_input' type="hidden" />
+        <input name='civil_vi' id='civil_vi_input' type="hidden" />
+        <button type="submit" class="btn btn-primary hidden-print" formtarget="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF</button>
+    </form>
+    <!--<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по полу</div>
+    <div id="sexpiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по возрасту</div>
+    <div id="agepiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по социальному статусу</div>
+    <div id="socialpiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций гражданскому статусу</div>
+    <div id="civilpiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Вопросы предоставленных консультаций</div>
+    <div id="consultbarchart" class="barchart"></div>
+    
+    <div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных
+        действий
+    </div>
+    
+    <div id="visexpiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по возрасту</div>
+    <div id="viagepiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по социальному статусу</div>
+    <div id="visocialpiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций гражданскому статусу</div>
+    <div id="vicivilpiechart" class="piechart"></div>
+    <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Вопросы предоставленных консультаций</div>-->
+    <div class="text-center font18 bold play"><?=$range?></div>
+    <div id="sexpiechart" class="piechart"></div>
+    <div id="agepiechart" class="piechart"></div>
 
-<div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных
-    действий
+    <div class="print-page-break"></div>
+
+    <div id="socialpiechart" class="piechart"></div>
+    <div id="civilpiechart" class="piechart"></div>
+
+    <div class="print-page-break"></div>
+
+    <div id="consultbarchart" class="barchart"></div>
+
+    <div class="print-page-break"></div>
+
+    <div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
+
+    <div id="visexpiechart" class="piechart"></div>
+    <div id="viagepiechart" class="piechart"></div>
+
+    <div class="print-page-break"></div>
+    <div id="visocialpiechart" class="piechart"></div>
+    <div id="vicivilpiechart" class="piechart"></div>
 </div>
-
-<div id="visexpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по возрасту</div>
-<div id="viagepiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по социальному статусу</div>
-<div id="visocialpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций гражданскому статусу</div>
-<div id="vicivilpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Вопросы предоставленных консультаций</div>-->
-<div class="text-center"><?=$range?></div>
-<div id="sexpiechart" class="piechart"></div>
-<div id="agepiechart" class="piechart"></div>
-
-<div class="print-page-break"></div>
-
-<div id="socialpiechart" class="piechart"></div>
-<div id="civilpiechart" class="piechart"></div>
-
-<div class="print-page-break"></div>
-
-<div id="consultbarchart" class="barchart"></div>
-
-<div class="print-page-break"></div>
-
-<div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
-
-<div id="visexpiechart" class="piechart"></div>
-<div id="viagepiechart" class="piechart"></div>
-
-<div class="print-page-break"></div>
-<div id="visocialpiechart" class="piechart"></div>
-<div id="vicivilpiechart" class="piechart"></div>

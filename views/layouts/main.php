@@ -121,8 +121,20 @@ AppAsset::register($this);
         Министерства юстиции КР.<br> Все права защищены
     </div>
 </footer>
-<script src="https://use.fontawesome.com/02d1fd9ded.js"></script>
 <?php $this->endBody() ?>
+<script src="https://use.fontawesome.com/02d1fd9ded.js"></script>
+<script type="text/javascript">
+    $('#print_text').click(function () {
+        $('.text_view').removeClass('hidden-print');
+        $('.graphics_view').addClass('hidden-print');
+        window.print();
+    });
+    $('#print_graphics').click(function () {
+        $('.graphics_view').removeClass('hidden-print');
+        $('.text_view').addClass('hidden-print');
+        window.print();
+    });
+</script>
 </body>
 </html>
 <?php $this->endPage() ?>

@@ -1,9 +1,4 @@
-<?php
-
-use yii\helpers\Html;
-
-?>
-    <div class="main-heading centre-align">Потребности в тренингах:</div>
+<div class="main-heading centre-align">Потребности в тренингах:</div>
 <?php if ($model->traning_issue): ?>
     <div class="report-type-cover">
         <label><?= $model->getAttributeLabel('traning_issue'); ?></label>

@@ -59,12 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
     $items = [
         [
-            'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
+            'label' => '<div class="text_view"><i class="tab-icon glyphicon glyphicon-stats "></i> Цифровой отчет</div>',
             'content' => $this->render('digital', ['report' => $report,'dataProvider'=>$dataProvider,'range'=>$range]),
             'active' => true,
         ],
         [
-            'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
+            'label' => '<div class="graphics_view"><i class="tab-icon fa fa-line-chart" style="font-size: 35px;"></i> Графический отчет</div>',
             'content' => $this->render('graphics', ['report' => $report,'dataProvider'=>$dataProvider,'range'=>$range]),
         ],
 
@@ -137,13 +137,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     //$report = $report->getTotal($dataProvider->models, 'men');
     ?>
-    <?
+   <!-- <?/*
     if(isset($_GET["month_from"])) {
-        ?>
+        */?>
         <button onclick="window.print()" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
-    <?php
-    }
-    ?>
+    --><?php
+/*    }
+    */?>
     <div class="col-md-12 pad-remove top-20-marginer">
         <?
         if (isset($_GET["month_from"])) {

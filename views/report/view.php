@@ -17,18 +17,18 @@ $this->params['breadcrumbs'][] = $this->title;
 </style>
 <div class="report-view report-form-type">
 
-    <button onclick="window.print()" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
+    <!--<button onclick="window.print()" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>-->
     <!--<div class="main-heading"><?/*= Html::encode($this->title) */?></div>-->
 
     <?php
     $items = [
         [
-            'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div>Цифровой отчет',
+            'label' => '<div class="text_view"><i class="tab-icon glyphicon glyphicon-stats "></i> Цифровой отчет</div>',
             'content' => $this->render('check/general-stats', ['model' => $model]),
             'active' => true,
         ],
         [
-            'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
+            'label' => '<div class="graphics_view"><i class="tab-icon fa fa-line-chart" style="font-size: 35px;"></i> Графический отчет</div>',
             'content' => $this->render('check/graphics', ['model' => $model]),
         ],
         /*[
