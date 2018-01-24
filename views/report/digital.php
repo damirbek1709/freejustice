@@ -2,11 +2,14 @@
 
 <?php
 use yii\helpers\Html;
-echo Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF', ['/report/export','layout'=>'details'], [
-    'class'=>'btn btn-primary',
+$params=Yii::$app->request->queryParams;
+$arr=['/report/export','layout'=>'details'];
+$arr2=array_merge($arr,$params);
+echo Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF', $arr2, [
+    'class'=>'btn btn-primary hidden-print',
     'target'=>'_blank',
     'data-toggle'=>'tooltip',
-    'title'=>'Will open the generated PDF file in a new window'
+    'title'=>'Откроет сгенерированный PDF в новом окне'
 ]);
 ?>
-<?=$this->render('details',['report'=>$report,'dataProvider'=>$dataProvider])?>
+<?=$this->render('details',['report'=>$report,'dataProvider'=>$dataProvider,'range'=>$range])?>

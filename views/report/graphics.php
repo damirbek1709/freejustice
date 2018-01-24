@@ -13,6 +13,12 @@
     google.charts.setOnLoadCallback(drawViAgeChart);
     google.charts.setOnLoadCallback(drawViSocialChart);
     google.charts.setOnLoadCallback(drawViCivilChart);
+    google.charts.setOnLoadCallback(removeCss);
+
+    function removeCss(){
+        setTimeout(function(){$('#tab2visible').remove();}, 1000);
+    }
+
 
     var men = "<?=$report->getTotal($dataProvider->models, 'men');?>";
     var women = "<?=$report->getTotal($dataProvider->models, 'women');?>";
@@ -32,7 +38,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по полу',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -41,10 +47,11 @@
                 'fontSize': 19,
             }
         };
-        var chart = new google.visualization.PieChart(document.getElementById('sexpiechart'));
-        var my_div = document.getElementById('sexpiechart');
+        var my_div=document.getElementById('sexpiechart');
+        var chart = new google.visualization.PieChart(my_div);
         google.visualization.events.addListener(chart, 'ready', function () {
-            my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('sexpiechart_input').value = chart.getImageURI();
         });
         chart.draw(data, options);
     }
@@ -58,7 +65,7 @@
 
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по полу',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -68,6 +75,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('visexpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('sex_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -106,7 +117,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по возрасту',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -116,6 +127,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('agepiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('agepiechart_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -129,7 +144,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по возрасту',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -139,6 +154,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('viagepiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('age_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -152,7 +171,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по гражданскому статусу',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -162,6 +181,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('civilpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('civilpiechart_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -180,7 +203,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по гражданскому статусу',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -190,9 +213,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('vicivilpiechart'));
-        var my_div = document.getElementById('vicivilpiechart');
         google.visualization.events.addListener(chart, 'ready', function () {
-            my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('civil_vi_input').value = chart.getImageURI();
         });
         chart.draw(data, options);
     }
@@ -223,7 +246,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по социальному статусу',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -233,6 +256,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('socialpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('socialpiechart_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -248,7 +275,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Итог консультаций по социальному статусу',
             'legend.position': 'bottom',
             'width': 550,
             'height': 350,
@@ -258,6 +285,10 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('visocialpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('social_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -308,7 +339,7 @@
         ]);
 
         var options = {
-            'title': '',
+            'title': 'Вопросы предоставленных консультаций',
             'chartArea': {width: 500, left: 250, top: 50, height: 750},
             'legend': {
                 position: "none",
@@ -328,11 +359,37 @@
 
         };
         var chart = new google.visualization.BarChart(document.getElementById('consultbarchart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            //my_div.innerHTML = '<img src="' + chart.getImageURI() + '">';
+            document.getElementById('consultbarchart_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
 </script>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по полу</div>
+<?php
+if($images=Yii::$app->request->post('test')){
+    foreach($images as $image){
+        echo "<img src='{$image}' /><br />";
+    }
+}
+?>
+<form action="/report/export-graph" method="post">
+    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
+    <input name='range' type="hidden" value="<?=$range?>" />
+    <input name='sex' id='sexpiechart_input' type="hidden" />
+    <input name='age' id='agepiechart_input' type="hidden" />
+    <input name='social' id='socialpiechart_input' type="hidden" />
+    <input name='civil' id='civilpiechart_input' type="hidden" />
+    <input name='consult' id='consultbarchart_input' type="hidden" />
+
+    <input name='sex_vi' id='sex_vi_input' type="hidden" />
+    <input name='age_vi' id='age_vi_input' type="hidden" />
+    <input name='social_vi' id='social_vi_input' type="hidden" />
+    <input name='civil_vi' id='civil_vi_input' type="hidden" />
+    <button type="submit" class="btn btn-primary hidden-print" formtarget="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF</button>
+</form>
+<!--<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по полу</div>
 <div id="sexpiechart" class="piechart"></div>
 <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций по возрасту</div>
 <div id="agepiechart" class="piechart"></div>
@@ -354,4 +411,27 @@
 <div id="visocialpiechart" class="piechart"></div>
 <div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Итог консультаций гражданскому статусу</div>
 <div id="vicivilpiechart" class="piechart"></div>
-<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Вопросы предоставленных консультаций</div>
+<div style="font-size: 21px;font-weight: 700;" class="general_heading centre-align">Вопросы предоставленных консультаций</div>-->
+<div class="text-center"><?=$range?></div>
+<div id="sexpiechart" class="piechart"></div>
+<div id="agepiechart" class="piechart"></div>
+
+<div class="print-page-break"></div>
+
+<div id="socialpiechart" class="piechart"></div>
+<div id="civilpiechart" class="piechart"></div>
+
+<div class="print-page-break"></div>
+
+<div id="consultbarchart" class="barchart"></div>
+
+<div class="print-page-break"></div>
+
+<div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
+
+<div id="visexpiechart" class="piechart"></div>
+<div id="viagepiechart" class="piechart"></div>
+
+<div class="print-page-break"></div>
+<div id="visocialpiechart" class="piechart"></div>
+<div id="vicivilpiechart" class="piechart"></div>

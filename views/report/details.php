@@ -1,8 +1,8 @@
 
-
 <div class="main-heading centre-align">Общая статистика консультаций</div>
+<div class="centre-align"><?=$range;?></div>
 <div class="report-type-cover">
-    <div class="general_heading">
+    <div class="general_heading mt10">
         В том числе по полу:
     </div>
     <table id="w0" class="equal-divider table table-striped table-bordered detail-view">
@@ -114,16 +114,16 @@
 </div>
 
 <!----------------------------------------------------------------------------------------------->
-
-<div class="main-heading centre-align">
+<div class="print-page-break"></div>
+<div class="main-heading centre-align mt0">
     Вопросы предоставленных консультаций
 </div>
 
 <div class="report-type-cover">
-    <div class="general_heading">
+    <div class="general_heading mt0">
         В том числе:
     </div>
-    <table id="w4" class="equal-divider table table-striped table-bordered detail-view">
+    <table id="w4" class="table table-striped table-bordered detail-view">
         <tbody>
         <tr>
             <th>Вопросы наследства(завещание)</th>
@@ -214,7 +214,7 @@
         </tbody>
     </table>
 </div>
-
+<pagebreak />
 <div class="main-heading centre-align">По вопросам домашнего насилия</div>
 
 <div class="report-type-cover">
@@ -267,6 +267,7 @@
 
 <!-----------------------------------------SOCIAL STATUS ------------------------------------------------->
 
+<div class="print-page-break"></div>
 <div class="report-type-cover">
     <div class="general_heading">
         В том числе по социальному статусу:
@@ -304,7 +305,7 @@
 <!-----------------------------------------CIVIL STATUS ------------------------------------------------->
 
 
-<div class="report-type-cover">
+<div class="report-type-cover pdf-mb0 pdf-pb0 pdf-bb0">
     <div class="general_heading">
         В том числе по по гражданскому статусу:
     </div>

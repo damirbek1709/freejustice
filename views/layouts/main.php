@@ -63,7 +63,7 @@ AppAsset::register($this);
     }
     ?>
     <div class="container" style="padding: 10px 0 15px">
-        <div class="col-md-12 shapka">
+        <div class="col-md-12 shapka hidden-print">
             <div class="col-md-3" style="padding-left: 0;">
                 <?= Html::a(Html::img(Url::base() . '/images/site/logo.png'), ['/site/index'], ['class' => 'logo']); ?>
             </div>
@@ -79,7 +79,7 @@ AppAsset::register($this);
     </div>
 
     <div class="container" style="padding-top: 25px;">
-        <div class="left-bar col-md-3">
+        <div class="left-bar col-md-3 hidden-print">
             <?php
             echo Nav::widget([
                 'options' => [
@@ -115,13 +115,13 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer hidden-print">
     <div class="container">
         © Центр по оказанию бесплатной юридической помощи (ЦБЮП)
         Министерства юстиции КР.<br> Все права защищены
     </div>
 </footer>
-
+<script src="https://use.fontawesome.com/02d1fd9ded.js"></script>
 <?php $this->endBody() ?>
 </body>
 </html>

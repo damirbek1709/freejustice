@@ -14,6 +14,7 @@ use yii\web\HttpException;
 use yii\filters\AccessControl;
 use dektrium\user\filters\AccessRule;
 use kartik\mpdf\Pdf;
+use yii\helpers\ArrayHelper;
 
 /**
  * ReportController implements the CRUD actions for Report model.
@@ -34,18 +35,18 @@ class ReportController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['create', 'export'],
+                        'actions' => ['create', 'export','export-graph'],
                         'roles' => ['@', 'admin'],
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index'],
+                        'actions' => ['index','test'],
                         'roles' => ['@'],
                     ],
 
                     [
                         'allow' => true,
-                        'actions' => ['update', 'delete', 'view', 'city'],
+                        'actions' => ['update', 'delete', 'view', 'city','export-view'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rule, $action) {
                             if ((!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) || $this->isUserAuthor()) {
@@ -66,7 +67,15 @@ class ReportController extends Controller
 
     public function actionExport($layout)
     {
-
+        $centre_arr = ArrayHelper::map(User::find()
+            ->select(['id', 'city'])
+            ->andFilterWhere(['!=', 'id', 1])
+            ->andFilterWhere(['!=', 'id', 75])
+            ->asArray()->all(),
+            'id', 'city');
+        $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
+            5 => 'Май', 6 => 'Июнь', 7 => 'Июль', 8 => 'Август',
+            9 => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
         $month_from = isset($_GET["month_from"]) ? $_GET["month_from"] : "";
         $month_till = isset($_GET["month_till"]) ? $_GET["month_till"] : "";
 
@@ -74,6 +83,17 @@ class ReportController extends Controller
         $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : "";
 
         $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+
+        $center_name="Все центры";
+        if(isset($centre_arr[$centre])){
+            $center_name=$centre_arr[$centre];
+        }
+        if($year_from==$year_till){
+            $range=$center_name.", ".$month_arr[$month_from]." - ".$month_arr[$month_till]." ".$year_till;
+        }
+        else{
+            $range=$center_name.", ".$month_arr[$month_from]." ".$year_from." - ".$month_arr[$month_till]." ".$year_till;
+        }
 
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
@@ -95,10 +115,74 @@ class ReportController extends Controller
             'content' => $this->renderPartial($layout, [
                 'report' => $report,
                 'dataProvider' => $dataProvider,
+                'range'=>$range
             ]),
             'cssFile' => '@webroot/css/pdf.css',
             'options' => [
                 'title' => "Цифровой отчет всех центров от " . $report->getMonth($month_from) . " " . $year_from . " до " . $report->getMonth($month_till) . " " . $year_till,
+                'subject' => 'Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР'
+            ],
+            'methods' => [
+                'SetHeader' => ['Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР ' . date("Y-m-d")],
+                'SetFooter' => ['|{PAGENO}|'],
+            ],
+        ]);
+        return $pdf->render();
+    }
+
+    public function actionExportGraph()
+    {
+        $range=Yii::$app->request->post('range');
+        $sex=Yii::$app->request->post('sex');
+        $age=Yii::$app->request->post('age');
+        $social=Yii::$app->request->post('social');
+        $civil=Yii::$app->request->post('civil');
+        $consult=Yii::$app->request->post('consult');
+        
+        $sex_vi=Yii::$app->request->post('sex_vi');
+        $age_vi=Yii::$app->request->post('age_vi');
+        $social_vi=Yii::$app->request->post('social_vi');
+        $civil_vi=Yii::$app->request->post('civil_vi');
+
+        $pdf = new Pdf([
+            'mode' => '', // leaner size using standard fonts
+            'content' => $this->renderPartial('graphics_pdf',[
+                'range'=>$range,
+                'sex'=>$sex,
+                'age'=>$age,
+                'social'=>$social,
+                'civil'=>$civil,
+                'consult'=>$consult,
+                'sex_vi'=>$sex_vi,
+                'age_vi'=>$age_vi,
+                'social_vi'=>$social_vi,
+                'civil_vi'=>$civil_vi,
+            ]),
+            'cssFile' => '@webroot/css/pdf.css',
+            'options' => [
+                'title' => "Графический отчет всех центров",
+                'subject' => 'Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР'
+            ],
+            'methods' => [
+                'SetHeader' => ['Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР ' . date("Y-m-d")],
+                'SetFooter' => ['|{PAGENO}|'],
+            ],
+        ]);
+        return $pdf->render();
+    }
+
+    public function actionExportView($id)
+    {
+        $model = $this->findModel($id);
+
+        $pdf = new Pdf([
+            'mode' => '', // leaner size using standard fonts
+            'content' => $this->renderPartial('check/general-stats',[
+                'model' => $model,
+            ]),
+            'cssFile' => '@webroot/css/pdf.css',
+            'options' => [
+                'title' => "Графический отчет всех центров",
                 'subject' => 'Центр по оказанию бесплатной юридической помощи(ЦБЮП) Министерства Юстиции КР'
             ],
             'methods' => [
@@ -194,10 +278,8 @@ class ReportController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $city = $model->user->city;
         return $this->render('view', [
             'model' => $model,
-            'city' => $city,
         ]);
     }
 
@@ -284,5 +366,9 @@ class ReportController extends Controller
         }
 
         throw new NotFoundHttpException(Yii::t('app', 'The requested page does not exist.'));
+    }
+
+    public function actionTest(){
+        return $this->render('test');
     }
 }

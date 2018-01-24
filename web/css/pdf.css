@@ -5692,7 +5692,7 @@ body {
     font-family: 'Play',sans-serif;
     font-size: 24px;
     font-weight: 700;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-top: 20px;
 }
 .righter{
@@ -5736,4 +5736,13 @@ body {
 .centre-align{
     text-align: center;
 }
+div.mt10{margin-top:10px;}
+div.mt0{margin-top:0;}
+div.pdf-mb0 {margin-bottom:0;}
+div.pdf-pb0{padding-bottom:0;}
+div.pdf-bb0{border-bottom:none;}
 
+div.mb0{margin-bottom:0;}
+div.mb20{margin-bottom:20px;}
+div.font16{font-size:16px;}
+div.font18{font-size:18px;}

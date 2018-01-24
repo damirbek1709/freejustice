@@ -7,12 +7,18 @@ use kartik\tabs\TabsX;
 /* @var $this yii\web\View */
 /* @var $model app\models\Report */
 
-$this->title = $city." - ".$model->getMonth($model->month)." ".$model->year;
+$this->title = $model->user->city." - ".$model->getMonth($model->month)." ".$model->year;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css" id="tab2visible">
+    div.tab-content > .tab-pane {
+        display: block;
+    }
+</style>
 <div class="report-view report-form-type">
 
-    <div class="main-heading"><?= Html::encode($this->title) ?></div>
+    <button onclick="window.print()" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
+    <!--<div class="main-heading"><?/*= Html::encode($this->title) */?></div>-->
 
     <?php
     $items = [
@@ -22,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'active' => true,
         ],
         [
-            'label' => '<div class="tab-icon glyphicon glyphicon-question-sign"></div> Графический отчет',
+            'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
             'content' => $this->render('check/graphics', ['model' => $model]),
         ],
         /*[

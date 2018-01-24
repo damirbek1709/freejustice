@@ -1,10 +1,21 @@
-<?
+<?php
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+/* @var $model app\models\Report */
+
+echo Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF', ['/report/export-view','id'=>$model->id], [
+    'class'=>'btn btn-primary hidden-print',
+    'target'=>'_blank',
+    'data-toggle'=>'tooltip',
+    'title'=>'Откроет сгенерированный PDF в новом окне'
+]);
 ?>
-<div class="main-heading centre-align">Общая статистика консультаций</div>
+<div class="main-heading centre-align mt0 mb0">Общая статистика консультаций</div>
+
+<div class="text-center mb20 font18 play bold"><?=$model->user->city." - ".$model->getMonth($model->month)." ".$model->year?></div>
+
 <div class="report-type-cover">
 
     <?= DetailView::widget([
@@ -78,9 +89,13 @@ use yii\widgets\DetailView;
         ],
     ]); ?>
 </div>
-
+<pagebreak />
+<div class="print-page-break"></div>
 <?=$this->render('consult',['model'=>$model]);?>
+<pagebreak />
+<div class="print-page-break"></div>
 <?=$this->render('domestic-violence',['model'=>$model]);?>
+<pagebreak />
 <?=$this->render('operation',['model'=>$model]);?>
 <?=$this->render('traning',['model'=>$model]);?>
 

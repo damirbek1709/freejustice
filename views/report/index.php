@@ -1,4 +1,3 @@
-<script src="https://use.fontawesome.com/02d1fd9ded.js"></script>
 <?php
 
 use yii\helpers\Html;
@@ -13,6 +12,11 @@ use kartik\tabs\TabsX;
 $this->title = Yii::t('app', 'Reports');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+<style type="text/css" id="tab2visible">
+    div.tab-content > .tab-pane {
+        display: block;
+    }
+</style>
 <div class="report-index report-form-type">
 
     <?php
@@ -29,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
     $centre_arr = ArrayHelper::map(\app\models\User::find()
         ->select(['id', 'city'])
         ->andFilterWhere(['!=', 'id', 1])
+        ->andFilterWhere(['!=', 'id', 75])
         ->asArray()->all(),
         'id', 'city');
 
@@ -38,18 +43,29 @@ $this->params['breadcrumbs'][] = $this->title;
     $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : date('Y');
     $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : date('Y');
     $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
+    $center_name="Все центры";
+    if(isset($centre_arr[$centre])){
+        $center_name=$centre_arr[$centre];
+    }
+    if($year_from==$year_till){
+        $range=$center_name.", ".$month_arr[$month_from]." - ".$month_arr[$month_till]." ".$year_till;
+    }
+    else{
+        $range=$center_name.", ".$month_arr[$month_from]." ".$year_from." - ".$month_arr[$month_till]." ".$year_till;
+    }
+
 
     $report = new Report();
 
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
-            'content' => $this->render('digital', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'content' => $this->render('digital', ['report' => $report,'dataProvider'=>$dataProvider,'range'=>$range]),
             'active' => true,
         ],
         [
             'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
-            'content' => $this->render('pre-graphics', ['report' => $report,'dataProvider'=>$dataProvider]),
+            'content' => $this->render('graphics', ['report' => $report,'dataProvider'=>$dataProvider,'range'=>$range]),
         ],
 
     ];
@@ -57,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!----------------------------------------------------------------------------------------------------------------->
 
     <?php
-    echo Html::beginForm(['report/index'], 'get', ['class' => '']);
+    echo Html::beginForm(['report/index'], 'get', ['class' => 'hidden-print']);
     echo Html::beginTag('div', ['class' => 'col-md-6 pad-remove']);
 
     echo Html::tag('div', 'От', ['class' => 'col-md-2 label-siding']);
@@ -98,15 +114,20 @@ $this->params['breadcrumbs'][] = $this->title;
     echo Html::beginTag('div', ['class' => 'col-md-2 pad-remove-left pad-remove-right']);
     echo Html::tag('button', 'Поиск', ['type' => 'submit', 'class' => 'btn btn-primary' ,'style'=>'width:100%;text-align:center']);
     echo Html::endTag('div');
-    echo Html::beginForm();
+    echo Html::endForm();
 
     //--   -----------------------------------------------------------------------------------------------------
 
 
     //$report = $report->getTotal($dataProvider->models, 'men');
     ?>
-
-
+    <?
+    if(isset($_GET["month_from"])) {
+        ?>
+        <button onclick="window.print()" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
+    <?php
+    }
+    ?>
     <div class="col-md-12 pad-remove top-20-marginer">
         <?
         if(isset($_GET["month_from"])) {

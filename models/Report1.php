@@ -71,7 +71,7 @@ use Yii;
  * @property integer $vi_civil_without
  * @property integer $vi_civil_refugee
  */
-class Report extends \yii\db\ActiveRecord
+class Report1 extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc

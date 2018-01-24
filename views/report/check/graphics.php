@@ -12,6 +12,11 @@
     google.charts.setOnLoadCallback(drawViAgeChart);
     google.charts.setOnLoadCallback(drawViSocialChart);
     google.charts.setOnLoadCallback(drawViCivilChart);
+    google.charts.setOnLoadCallback(removeCss);
+
+    function removeCss(){
+        setTimeout(function(){$('#tab2visible').remove();}, 1000);
+    }
 
     var men = "<?=$model->men;?>";
     var women = "<?=$model->women;?>";
@@ -41,6 +46,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('sexpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('sex_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
     function drawSexChart() {
@@ -64,6 +72,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('visexpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('sex_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -112,6 +123,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('agepiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('age_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
     function drawViAgeChart() {
@@ -134,6 +148,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('viagepiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('age_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
     function drawCivilChart() {
@@ -156,6 +173,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('civilpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('civil_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
     var vi_civil_kyrgyz_republic = parseInt("<?=$model->vi_civil_kyrgyz_republic;?>");
@@ -183,6 +203,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('vicivilpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('civil_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -222,6 +245,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('socialpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('social_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
     function drawViSocialChart() {
@@ -246,6 +272,9 @@
             }
         };
         var chart = new google.visualization.PieChart(document.getElementById('visocialpiechart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('social_vi_input').value = chart.getImageURI();
+        });
         chart.draw(data, options);
     }
 
@@ -314,20 +343,43 @@
 
         };
             var chart = new google.visualization.BarChart(document.getElementById('consultbarchart'));
+        google.visualization.events.addListener(chart, 'ready', function () {
+            document.getElementById('consult_input').value = chart.getImageURI();
+        });
             chart.draw(data, options);
     }
 
 </script>
 
+<form action="/report/export-graph" method="post">
+    <input type="hidden" name="<?= Yii::$app->request->csrfParam; ?>" value="<?= Yii::$app->request->csrfToken; ?>" />
+    <input name='range' type="hidden" value="<?=$model->user->city." - ".$model->getMonth($model->month)." ".$model->year?>" />
+    <input name='sex' id='sex_input' type="hidden" />
+    <input name='age' id='age_input' type="hidden" />
+    <input name='social' id='social_input' type="hidden" />
+    <input name='civil' id='civil_input' type="hidden" />
+    <input name='consult' id='consult_input' type="hidden" />
+
+    <input name='sex_vi' id='sex_vi_input' type="hidden" />
+    <input name='age_vi' id='age_vi_input' type="hidden" />
+    <input name='social_vi' id='social_vi_input' type="hidden" />
+    <input name='civil_vi' id='civil_vi_input' type="hidden" />
+    <button type="submit" class="btn btn-primary hidden-print" formtarget="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF</button>
+</form>
+<div class="text-center font18 bold play"><?=$model->user->city." - ".$model->getMonth($model->month)." ".$model->year?></div>
 <div id="sexpiechart" class="piechart"></div>
 <div id="agepiechart" class="piechart"></div>
+<div class="print-page-break"></div>
 <div id="socialpiechart" class="piechart"></div>
 <div id="civilpiechart" class="piechart"></div>
+<div class="print-page-break"></div>
 <div id="consultbarchart" class="barchart"></div>
 
+<div class="print-page-break"></div>
 <div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
 
 <div id="visexpiechart" class="piechart"></div>
 <div id="viagepiechart" class="piechart"></div>
+<div class="print-page-break"></div>
 <div id="visocialpiechart" class="piechart"></div>
 <div id="vicivilpiechart" class="piechart"></div>
