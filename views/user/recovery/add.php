@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('user', 'Добавить пользователя');
 $this->params['breadcrumbs'][] = $this->title;
-$users = ArrayHelper::map(\app\models\User::find()->where(['parent' => 0])->asArray()->all(), 'id', 'city');
+$users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 0])->andFilterWhere(['!=','id',75])->asArray()->all(), 'id', 'city');
 ?>
 <div class="row">
     <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-3">
@@ -48,8 +48,18 @@ $users = ArrayHelper::map(\app\models\User::find()->where(['parent' => 0])->asAr
                 </div>
 
                 <div class="form-group">
+
+                    <?
+                    $new = [1 => 'Региональный администратор', 2 => 'Центр'];
+                    echo Html::radioList('userType', null, $new, ['class' => 'radio']);
+                    ?>
+                </div>
+
+
+
+                <div class="form-group reg-admin">
                     <label class="control-label">Региональный администратор</label>
-                    <select name="parent">
+                    <select class="form-control" name="parent">
                         <option value="0">Региональнай администратор</option>
                         <?php
                         foreach ($users as $key => $val) {
@@ -68,3 +78,16 @@ $users = ArrayHelper::map(\app\models\User::find()->where(['parent' => 0])->asAr
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $('input:radio[name="userType"]').change(
+        function(){
+            if ($(this).is(':checked') && $(this).val() == 2) {
+                $('.reg-admin').css('display','block');
+                // append goes here
+            }
+            else{
+                $('.reg-admin').css('display','none');
+            }
+        });
+</script>

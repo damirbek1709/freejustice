@@ -138,15 +138,15 @@ class ReportController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        $start_date = $year_from."-".$month_from."-01";
+        $start_date = $year_from . "-" . $month_from . "-01";
         $start_date = date("Y-m-d", strtotime($start_date));
 
-        $end_date = $year_till."-".$month_till."-28";
+        $end_date = $year_till . "-" . $month_till . "-28";
         $end_date = date("Y-m-d", strtotime($end_date));
 
         $dataProvider->query->andFilterWhere(['between', 'sort_date', $start_date, $end_date]);
 
-       // ->where(['between', 'date', $start, $end])
+        // ->where(['between', 'date', $start, $end])
 
         /*$dataProvider->query->andFilterWhere(['>=', 'month', $month_from]);
         $dataProvider->query->andFilterWhere(['>=', 'year', $year_from]);
@@ -154,11 +154,24 @@ class ReportController extends Controller
         $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
         $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);*/
 
-        if (!Yii::$app->user->identity->isAdmin) {
-            $centre = Yii::$app->user->id;
+        $user =  User::findOne($centre);
+
+
+        $centre_arr = User::find()
+            ->andFilterWhere(['parent' => $centre])
+            ->all();
+
+        $new_arr = [];
+        foreach ($centre_arr as $item) {
+            $new_arr[]= $item->id;
         }
 
-        $dataProvider->query->andFilterWhere(['user_id' => $centre]);
+
+        if ($user && $user->parent == 0) {
+            $dataProvider->query->andFilterWhere(['user_id' => $new_arr]);
+        } else {
+            $dataProvider->query->andFilterWhere(['user_id' => $centre]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -212,7 +225,7 @@ class ReportController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->sort_date = $model->year . "-" . $model->month . "-28";
-            $model->save();
+            $model->save(false);
             if (Yii::$app->user->identity->isAdmin) {
                 return $this->redirect(['city', 'id' => $model->user_id]);
             } else {
@@ -242,7 +255,7 @@ class ReportController extends Controller
         } else {
             if ($model->load(Yii::$app->request->post())) {
                 $model->sort_date = $model->year . "-" . $model->month . "-28";
-                $model->save();
+                $model->save(false);
                 if (Yii::$app->user->identity->isAdmin) {
                     return $this->redirect(['city', 'id' => $model->user_id]);
                 } else {
