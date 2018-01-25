@@ -28,14 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $this->render('/_alert', ['module' => Yii::$app->getModule('user')]) ?>
 
-<?=Html::a('Добавить пользователя',['/user/add'],['class'=>'btn btn-primary','style'=>'margin-bottom:10px;'])?>
+<?= Html::a('Добавить центр', ['/user/add'], ['class' => 'btn btn-primary', 'style' => 'margin-bottom:10px;']) ?>
 
 <?php Pjax::begin() ?>
 
 <?= GridView::widget([
     'dataProvider' => $dataProvider,
-    'filterModel'  => $searchModel,
-    'layout'       => "{items}\n{pager}",
+    'filterModel' => $searchModel,
+    'layout' => "{items}\n{pager}",
     'columns' => [
         [
             'attribute' => 'id',
@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'username',
         'email:email',
-        [
+        /*[
             'attribute' => 'created_at',
             'value' => function ($model) {
                 if (extension_loaded('intl')) {
@@ -52,19 +52,20 @@ $this->params['breadcrumbs'][] = $this->title;
                     return date('Y-m-d G:i:s', $model->created_at);
                 }
             },
-        ],
+        ],*/
 
         [
-          'attribute' => 'last_login_at',
-          'value' => function ($model) {
-            if (!$model->last_login_at || $model->last_login_at == 0) {
-                return Yii::t('user', 'Never');
-            } else if (extension_loaded('intl')) {
-                return Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$model->last_login_at]);
-            } else {
-                return date('Y-m-d G:i:s', $model->last_login_at);
-            }
-          },
+            'attribute' => 'last_login_at',
+            'label' => 'Время последнего входа',
+            'value' => function ($model) {
+                if (!$model->last_login_at || $model->last_login_at == 0) {
+                    return Yii::t('user', '-');
+                } else if (extension_loaded('intl')) {
+                    return Yii::t('user', '{0, date, MMMM dd, YYYY HH:mm}', [$model->last_login_at]);
+                } else {
+                    return date('Y-m-d G:i:s', $model->last_login_at);
+                }
+            },
         ],
         [
             'header' => Yii::t('user', 'Confirmation'),

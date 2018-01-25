@@ -12,6 +12,11 @@ use kartik\tabs\TabsX;
 
 $this->title = 'Отчеты';
 ?>
+<style type="text/css" id="tab2visible">
+    div.tab-content > .tab-pane {
+        display: block;
+    }
+</style>
 <div class="site-index">
     <?php
     $month_arr = [1 => 'Январь', 2 => 'Февраль', 3 => 'Март', 4 => 'Апрель',
@@ -82,13 +87,12 @@ $this->title = 'Отчеты';
 
     <?
     $report = new Report();
-    if (Yii::$app->user->identity->parent == 0) :
+    if (Yii::$app->user->identity->parent == 0) {
         echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
 
         echo Html::beginTag('div', ['class' => 'col-md-12 ']); ?>
 
         <select class="form-control" name="centre">
-            <option value="">Место</option>
             <?php
             $item2 = User::findOne(Yii::$app->user->id);
 
@@ -98,20 +102,23 @@ $this->title = 'Отчеты';
             $children = User::find()->where("parent=:parent_id", [":parent_id" => Yii::$app->user->id])->all();
 
             foreach ($children as $child) {
-                if ($child)
-                    echo Html::tag('option', "  &nbsp;&nbsp;&nbsp;&nbsp;" . $child->city, ['value' => $child->id, 'class' => 'optionChild']);
+                if ($child) {
+                    ?>
+                    <option class="optionChild" <?
+                    if ($child->id == $centre) echo 'selected'; ?>
+                            value="<?= $child->id ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?= $child->city ?></option>
+                <?php };
+                //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
             }
-            //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
-
             ?>
         </select>
 
         <? echo Html::endTag('div');
         echo Html::endTag('div');
-    else :
+    } else {
 
-    echo Html::hiddenInput('centre', $centre);
-    endif;
+        echo Html::hiddenInput('centre', $centre);
+    }
 
 
     echo Html::beginTag('div', ['class' => 'col-md-3 pad-remove']);
@@ -128,12 +135,12 @@ $this->title = 'Отчеты';
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
-            'content' => $this->render('/report/digital', ['report' => $report, 'dataProvider' => $dataProvider,'range'=>$range]),
+            'content' => $this->render('/report/digital', ['report' => $report, 'dataProvider' => $dataProvider, 'range' => $range]),
             'active' => true,
         ],
         [
             'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
-            'content' => $this->render('/report/pre-graphics', ['report' => $report, 'dataProvider' => $dataProvider,'range'=>$range]),
+            'content' => $this->render('/report/pre-graphics', ['report' => $report, 'dataProvider' => $dataProvider, 'range' => $range]),
         ],
 
     ];

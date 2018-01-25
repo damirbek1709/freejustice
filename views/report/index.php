@@ -43,15 +43,14 @@ $this->params['breadcrumbs'][] = $this->title;
     $year_from = isset($_GET["year_from"]) ? $_GET["year_from"] : date('Y');
     $year_till = isset($_GET["year_till"]) ? $_GET["year_till"] : date('Y');
     $centre = isset($_GET["centre"]) ? $_GET["centre"] : "";
-    $center_name="Все центры";
-    if(isset($centre_arr[$centre])){
-        $center_name=$centre_arr[$centre];
+    $center_name = "Все центры";
+    if (isset($centre_arr[$centre])) {
+        $center_name = $centre_arr[$centre];
     }
-    if($year_from==$year_till){
-        $range=$center_name.", ".$month_arr[$month_from]." - ".$month_arr[$month_till]." ".$year_till;
-    }
-    else{
-        $range=$center_name.", ".$month_arr[$month_from]." ".$year_from." - ".$month_arr[$month_till]." ".$year_till;
+    if ($year_from == $year_till) {
+        $range = $center_name . ", " . $month_arr[$month_from] . " - " . $month_arr[$month_till] . " " . $year_till;
+    } else {
+        $range = $center_name . ", " . $month_arr[$month_from] . " " . $year_from . " - " . $month_arr[$month_till] . " " . $year_till;
     }
 
 
@@ -60,12 +59,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $items = [
         [
             'label' => '<div class="text_view"><i class="tab-icon glyphicon glyphicon-stats "></i> Цифровой отчет</div>',
-            'content' => $this->render('digital', ['report' => $report,'dataProvider'=>$dataProvider,'range'=>$range]),
+            'content' => $this->render('digital', ['report' => $report, 'dataProvider' => $dataProvider, 'range' => $range]),
             'active' => true,
         ],
         [
             'label' => '<div class="graphics_view"><i class="tab-icon fa fa-line-chart" style="font-size: 35px;"></i> Графический отчет</div>',
-            'content' => $this->render('graphics', ['report' => $report,'dataProvider'=>$dataProvider,'range'=>$range]),
+            'content' => $this->render('graphics', ['report' => $report, 'dataProvider' => $dataProvider, 'range' => $range]),
         ],
 
     ];
@@ -107,18 +106,28 @@ $this->params['breadcrumbs'][] = $this->title;
     /*-------------------------------------------------------------------------------------------------*/
     echo Html::tag('div', '', ['class' => 'col-md-12 top-20-marginer']);
 
-    echo Html::beginTag('div', ['class' => 'col-md-4 pad-remove-left']);?>
+    echo Html::beginTag('div', ['class' => 'col-md-4 pad-remove-left']); ?>
 
-   <select class="form-control" name="centre">
-        <option value="">Место</option>
+    <select class="form-control" name="centre">
+        <option value="">Все центры</option>
         <?php
-        $items2 = User::find()->andWhere(['parent' => 0])->andFilterWhere(['!=','id',75])->all();
+        $items2 = User::find()->andWhere(['parent' => 0])->andFilterWhere(['!=', 'id', 75])->all();
 
         foreach ($items2 as $item) {
-            $children = User::find()->where("parent=:parent_id", [":parent_id"=>$item->id])->all();
-            echo Html::tag('option',$item->city,['value'=>$item->id,'class'=>'optionGroup']);
-            foreach($children as $child) {
-                echo Html::tag('option',"  &nbsp;&nbsp;&nbsp;&nbsp;".$child->city,['value'=>$child->id,'class'=>'optionChild']);
+            $children = User::find()->where("parent=:parent_id", [":parent_id" => $item->id])->all();
+            //echo Html::tag('option',$item->city,['value'=>$item->id,'class'=>'optionGroup']);?>
+            <option class="optionGroup" <?
+            if ($item->id == $centre) echo 'selected'; ?>
+                    value="<?= $item->id ?>"><?= $item->city ?></option>
+            <?
+            foreach ($children as $child) {
+                if ($child) {
+                    ?>
+                    <option class="optionChild" <?
+                    if ($child->id == $centre) echo 'selected'; ?>
+                            value="<?= $child->id ?>">&nbsp;&nbsp;&nbsp;&nbsp;<?= $child->city ?></option>
+                <?php };
+                //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
             }
             //$itemsFormatted += $this->getDropdownItems($item->id, $level + 1);
         }
@@ -137,13 +146,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     //$report = $report->getTotal($dataProvider->models, 'men');
     ?>
-   <!-- <?/*
+    <!-- <? /*
     if(isset($_GET["month_from"])) {
-        */?>
+        */ ?>
         <button onclick="window.print()" class="hidden-print btn btn-default btn-sm pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
     --><?php
-/*    }
-    */?>
+    /*    }
+        */ ?>
     <div class="col-md-12 pad-remove top-20-marginer">
         <?
         if (isset($_GET["month_from"])) {

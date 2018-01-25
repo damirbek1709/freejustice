@@ -273,6 +273,7 @@ class ReportController extends Controller
         $searchModel = new ReportSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andFilterWhere(['user_id' => $id]);
+        $dataProvider->setSort(['defaultOrder' => ['sort_date'=>SORT_DESC]]);
         $city = User::findOne($id);
 
         return $this->render('city', [

@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
  * @var dektrium\user\models\RecoveryForm $model
  */
 
-$this->title = Yii::t('user', 'Добавить пользователя');
+$this->title = Yii::t('user', 'Добавить центр');
 $this->params['breadcrumbs'][] = $this->title;
 $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 0])->andFilterWhere(['!=', 'id', 75])->asArray()->all(), 'id', 'city');
 ?>
@@ -58,6 +58,7 @@ $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 
                 <div class="form-group reg-admin">
                     <label class="control-label">Региональный центр</label>
                     <select class="form-control" name="parent">
+                        <option value="0">Выберите центр</option>
                         <?php
                         foreach ($users as $key => $val) {
                             echo Html::tag('option', $val, ['value' => $key]);
