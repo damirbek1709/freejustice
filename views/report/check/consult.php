@@ -7,12 +7,12 @@ use yii\helpers\Html;
 <div class="main-heading centre-align">
     Вопросы предоставленных консультаций
 </div>
-<div class="report-type-cover">
-    <div class="general_heading">
+<div class="report-type-cover pdf-mt0 pdf-mb0">
+    <div class="general_heading pdf-mt0">
         В том числе:
     </div>
     <?= DetailView::widget([
-        'options' => ['class' => 'equal-divider table table-striped table-bordered detail-view'],
+        'options' => ['class' => 'equal-divider pdf-no-equal-divider table table-striped table-bordered detail-view'],
         'model' => $model,
         'attributes' => [
             'legacy',
@@ -49,4 +49,3 @@ use yii\helpers\Html;
 
     ?>
 </div>
-

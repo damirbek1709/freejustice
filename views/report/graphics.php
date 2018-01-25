@@ -435,17 +435,11 @@ if($images=Yii::$app->request->post('test')){
     <div class="text-center font18 bold play"><?=$range?></div>
     <div id="sexpiechart" class="piechart"></div>
     <div id="agepiechart" class="piechart"></div>
-
-    <div class="print-page-break"></div>
-
     <div id="socialpiechart" class="piechart"></div>
+
+    <div class="print-page-break"></div>
     <div id="civilpiechart" class="piechart"></div>
-
-    <div class="print-page-break"></div>
-
     <div id="consultbarchart" class="barchart"></div>
-
-    <div class="print-page-break"></div>
 
     <!--<div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
 

@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Report */
 ?>
 <div class="text_view">
-    <button id="print_text" class="hidden-print btn btn-default btn-xs pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</button>
+    <div id="print_text" class="hidden-print hidden-pdf btn btn-default btn-xs pull-right"><i class="fa fa-print" aria-hidden="true"></i> Распечатать</div>
     <?php
     echo Html::a('<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF', ['/report/export-view','id'=>$model->id], [
         'class'=>'btn btn-primary btn-xs hidden-print mb10',
@@ -95,9 +95,9 @@ use yii\widgets\DetailView;
     <pagebreak />
     <div class="print-page-break"></div>
     <?=$this->render('consult',['model'=>$model]);?>
-    <pagebreak />
-    <div class="print-page-break"></div>
+    <!--<pagebreak />-->
     <?//=$this->render('domestic-violence',['model'=>$model]);?>
+    <div class="print-page-break"></div>
     <pagebreak />
     <?=$this->render('operation',['model'=>$model]);?>
     <?=$this->render('traning',['model'=>$model]);?>

@@ -28,7 +28,7 @@
     vi_men = parseInt(vi_men);
     vi_women = parseInt(vi_women);
 
-    /*function drawViSexChart() {
+    function drawViSexChart() {
         var data = google.visualization.arrayToDataTable([
             ['Пол', 'Количество'],
             ['Мужчины', men],
@@ -47,10 +47,10 @@
         };
         var chart = new google.visualization.PieChart(document.getElementById('sexpiechart'));
         google.visualization.events.addListener(chart, 'ready', function () {
-            document.getElementById('sex_input').value = chart.getImageURI();
+            document.getElementById('sex_vi_input').value = chart.getImageURI();
         });
         chart.draw(data, options);
-    }*/
+    }
     function drawSexChart() {
         var data = google.visualization.arrayToDataTable([
             ['Пол', 'Количество'],
@@ -73,7 +73,7 @@
         };
         var chart = new google.visualization.PieChart(document.getElementById('sexpiechart'));
         google.visualization.events.addListener(chart, 'ready', function () {
-            document.getElementById('sex_vi_input').value = chart.getImageURI();
+            document.getElementById('sex_input').value = chart.getImageURI();
         });
         chart.draw(data, options);
     }
@@ -349,6 +349,7 @@
             'chartArea': {  width: 500,left: 250, top:50,height:720},
             'legend': { position: "none",
                 maxLines: 2,
+                minLines: 2,
                 textStyle: {
                     fontSize: 10
                 } },
@@ -381,19 +382,18 @@
         <input name='civil' id='civil_input' type="hidden" />
         <input name='consult' id='consult_input' type="hidden" />
 
-        <input name='sex_vi' id='sex_vi_input' type="hidden" />
+        <!--<input name='sex_vi' id='sex_vi_input' type="hidden" />
         <input name='age_vi' id='age_vi_input' type="hidden" />
         <input name='social_vi' id='social_vi_input' type="hidden" />
-        <input name='civil_vi' id='civil_vi_input' type="hidden" />
+        <input name='civil_vi' id='civil_vi_input' type="hidden" />-->
         <button type="submit" class="btn btn-primary btn-xs hidden-print" formtarget="_blank"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Экспортировать в PDF</button>
     </form>
     <div class="text-center font18 bold play"><?=$model->user->city." - ".$model->getMonth($model->month)." ".$model->year?></div>
     <div id="sexpiechart" class="piechart"></div>
     <div id="agepiechart" class="piechart"></div>
-    <div class="print-page-break"></div>
     <div id="socialpiechart" class="piechart"></div>
-    <div id="civilpiechart" class="piechart"></div>
     <div class="print-page-break"></div>
+    <div id="civilpiechart" class="piechart"></div>
     <div id="consultbarchart" class="barchart"></div>
 
     <div class="print-page-break"></div>

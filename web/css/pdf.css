@@ -5739,6 +5739,7 @@ body {
 div.mt10{margin-top:10px;}
 div.mt0{margin-top:0;}
 div.pdf-mb0 {margin-bottom:0;}
+div.pdf-mt0 {margin-top:0;}
 div.pdf-pb0{padding-bottom:0;}
 div.pdf-bb0{border-bottom:none;}
 
@@ -5746,3 +5747,12 @@ div.mb0{margin-bottom:0;}
 div.mb20{margin-bottom:20px;}
 div.font16{font-size:16px;}
 div.font18{font-size:18px;}
+div.hidden-pdf,button.hidden-pdf{display:none;}
+.pdf-no-equal-divider th {
+    width: 85%;
+    padding:4px;
+}
+.pdf-no-equal-divider td {
+    padding:4px;
+    text-align: center;
+}

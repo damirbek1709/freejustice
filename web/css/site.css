@@ -341,3 +341,11 @@ div.font18{font-size:18px;}
 .reg-admin-radio label{
     margin-right: 15px;
 }
+table.pdf-no-equal-divider th {
+    width: 85%;
+    padding:4px;
+}
+table.pdf-no-equal-divider td {
+    padding:4px;
+    text-align: center;
+}

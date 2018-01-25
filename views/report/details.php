@@ -174,12 +174,12 @@ use yii\helpers\Html;
     <div class="general_heading mt0">
         В том числе:
     </div>
-    <table id="w4" class="table table-striped table-bordered detail-view">
+    <table id="w4" class="table table-striped table-bordered detail-view equal-divider pdf-no-equal-divider">
         <tbody>
         <?php
         foreach ($data_arr as $key=>$val){
             echo Html::beginTag('tr');
-            echo Html::tag('th',$key,['style'=>'width:50%']);
+            echo Html::tag('th',$key,['class'=>'']);
             echo Html::tag('td',$report->getTotal($dataProvider->models, $val));
             echo Html::endTag('tr');
         }
@@ -188,7 +188,7 @@ use yii\helpers\Html;
         </tbody>
     </table>
 </div>
-<pagebreak />
+<!--<pagebreak />-->
 
 
 <!--<div class="main-heading centre-align">По вопросам домашнего насилия</div>-->
