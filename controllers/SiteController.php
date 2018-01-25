@@ -110,28 +110,29 @@ class SiteController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
 
-        if (isset($_GET["centre"]) && Yii::$app->user->identity->parent != 0) {
+        if (isset($_GET["centre"])) {
             $centre = $_GET["centre"];
-            $dataProvider->query->andFilterWhere(['user_id' => $centre]);
-        }
+            $user = User::findOne($centre);
+            if ($user->parent != 0) {
+                $dataProvider->query->andFilterWhere(['user_id' => $centre]);
+            } else {
+                $centre_arr = \app\models\User::find()->andFilterWhere(['parent' => Yii::$app->user->id])->all();
+                $new_arr = [];
 
-        elseif (isset($_GET["centre"]) && Yii::$app->user->identity->parent == 0) {
-            $centre_arr = \app\models\User::find()->andFilterWhere(['parent' => Yii::$app->user->id])->all();
-            $new_arr = [];
-
-            foreach ($centre_arr as $item) {
-                $new_arr[] = $item->id;
+                foreach ($centre_arr as $item) {
+                    $new_arr[] = $item->id;
+                }
+                $dataProvider->query->andFilterWhere(['user_id' => $new_arr]);
             }
-            $dataProvider->query->andFilterWhere(['user_id' => $new_arr]);
-        }
 
+        }
 
         //$dataProvider->query->andFilterWhere(['user_id' => $centre_arr]);
 
         $dataProvider->query->andFilterWhere(['between', 'sort_date', $start_date, $end_date]);
 
-
-        return $this->render('summary_index', ['dataProvider' => $dataProvider]);
+        $range = '';
+        return $this->render('summary_index', ['dataProvider' => $dataProvider, 'range' => $range]);
     }
 
 

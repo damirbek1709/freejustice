@@ -32,7 +32,7 @@ $config = [
                 ],
                 //'admin' =>'app\controllers\user\AdminController'
             ],
-            'enableFlashMessages' => false,
+            //'enableFlashMessages' => false,
             'enableRegistration'=>false,
             'enableConfirmation'=>false,
         ],

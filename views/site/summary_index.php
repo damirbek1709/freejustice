@@ -128,12 +128,12 @@ $this->title = 'Отчеты';
     $items = [
         [
             'label' => '<div class="tab-icon glyphicon glyphicon-stats "></div> Цифровой отчет',
-            'content' => $this->render('/report/digital', ['report' => $report, 'dataProvider' => $dataProvider]),
+            'content' => $this->render('/report/digital', ['report' => $report, 'dataProvider' => $dataProvider,'range'=>$range]),
             'active' => true,
         ],
         [
             'label' => '<div class="tab-icon fa fa-line-chart" style="font-size: 35px;"></div> Графический отчет',
-            'content' => $this->render('/report/pre-graphics', ['report' => $report, 'dataProvider' => $dataProvider]),
+            'content' => $this->render('/report/pre-graphics', ['report' => $report, 'dataProvider' => $dataProvider,'range'=>$range]),
         ],
 
     ];

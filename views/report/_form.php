@@ -87,7 +87,7 @@ use kartik\tabs\TabsX;
     ]);*/
     echo $this->render('general-stats', ['form' => $form, 'model' => $model]);
     echo $this->render('consult', ['form' => $form, 'model' => $model]);
-    echo $this->render('domestic-violence', ['form' => $form, 'model' => $model]);
+    //echo $this->render('domestic-violence', ['form' => $form, 'model' => $model]);
     echo $this->render('operation', ['form' => $form, 'model' => $model]);
     echo $this->render('traning', ['form' => $form, 'model' => $model]);
     ?>

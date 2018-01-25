@@ -8,10 +8,10 @@
 
     google.charts.setOnLoadCallback(drawConsultChart);
 
-    google.charts.setOnLoadCallback(drawViSexChart);
+    /*google.charts.setOnLoadCallback(drawViSexChart);
     google.charts.setOnLoadCallback(drawViAgeChart);
     google.charts.setOnLoadCallback(drawViSocialChart);
-    google.charts.setOnLoadCallback(drawViCivilChart);
+    google.charts.setOnLoadCallback(drawViCivilChart);*/
     google.charts.setOnLoadCallback(removeCss);
 
     function removeCss(){
@@ -28,7 +28,7 @@
     vi_men = parseInt(vi_men);
     vi_women = parseInt(vi_women);
 
-    function drawViSexChart() {
+    /*function drawViSexChart() {
         var data = google.visualization.arrayToDataTable([
             ['Пол', 'Количество'],
             ['Мужчины', men],
@@ -50,12 +50,12 @@
             document.getElementById('sex_input').value = chart.getImageURI();
         });
         chart.draw(data, options);
-    }
+    }*/
     function drawSexChart() {
         var data = google.visualization.arrayToDataTable([
             ['Пол', 'Количество'],
-            ['Мужчины', vi_men],
-            ['Женщины', vi_women],
+            ['Мужчины', men],
+            ['Женщины', women],
         ]);
 
         var options = {
@@ -71,7 +71,7 @@
                 'fontSize': 19,
             }
         };
-        var chart = new google.visualization.PieChart(document.getElementById('visexpiechart'));
+        var chart = new google.visualization.PieChart(document.getElementById('sexpiechart'));
         google.visualization.events.addListener(chart, 'ready', function () {
             document.getElementById('sex_vi_input').value = chart.getImageURI();
         });
@@ -282,46 +282,66 @@
     var donation_register = parseInt("<?=$model->donation_register;?>");
     var private_property = parseInt("<?=$model->private_property;?>");
     var entity_registration = parseInt("<?=$model->entity_registration;?>");
-    var civil_contract = parseInt(" <?=$model->civil_contract;?>");
-    var trade_contract = parseInt("<?=$model->trade_contract;?>");
-    var donation_contract = parseInt("<?=$model->donation_contract;?>");
-    var authority_procedural_action = parseInt("<?=$model->authority_procedural_action;?>");
+    var civil_contract = parseInt("<?=$model->civil_contract;?>");
+    var divorce = parseInt("<?=$model->divorce;?>");
+    var property_division = parseInt("<?=$model->property_division;?>");
+    var alimony = parseInt("<?=$model->alimony;?>");
+    var parent_rights = parseInt("<?=$model->parent_rights;?>");
     var family_law = parseInt("<?=$model->family_law;?>");
     var labor_disputes = parseInt("<?=$model->labor_disputes;?>");
+    var labor_refund = parseInt("<?=$model->labor_refund;?>");
+    var labor_civil = parseInt("<?=$model->labor_civil;?>");
+    var labor_other = parseInt("<?=$model->labor_other;?>");
     var land_disputes = parseInt("<?=$model->land_disputes;?>");
+    var land_trade = parseInt("<?=$model->land_trade;?>");
     var housing_disputes = parseInt("<?=$model->housing_disputes;?>");
+    var guardianship = parseInt("<?=$model->guardianship;?>");
     var social_protection = parseInt("<?=$model->social_protection;?>");
+    var privileges = parseInt("<?=$model->privileges;?>");
+    var social_other = parseInt("<?=$model->social_other;?>");
     var criminal_case = parseInt("<?=$model->criminal_case;?>");
     var administrative_offense = parseInt("<?=$model->administrative_offense;?>");
     var moral_material_harm = parseInt("<?=$model->moral_material_harm;?>");
-    var divorce = parseInt("<?=$model->divorce;?>");
-    var alimony = parseInt("<?=$model->alimony;?>");
     var identity_document = parseInt("<?=$model->identity_document;?>");
+    var evidence_document = parseInt("<?=$model->evidence_document;?>");
+    var document_other = parseInt("<?=$model->document_other;?>");
     var domestic_violence = parseInt("<?=$model->domestic_violence;?>");
+    var other = parseInt("<?=$model->other;?>");
+
+
 
     function drawConsultChart() {
         var data = google.visualization.arrayToDataTable([
             ['Консультации', '',{ role: 'style' }],
-            ['Вопросы наследства(завещание)',legacy, '#B03A2E'],
-            ['Оформление договора дарения',donation_register, '#76448A'],
-            ['Вопросы, связанные с правом собственности',private_property, '#2471A3 '],
-            ['Регистрация юридического лица',entity_registration, '#229954'],
-            ['Составление гражданско-правовых договоров',civil_contract, '#F1C40F'],
-            [ 'Вопросы, связанные с договором купли и продажи',trade_contract,'#D35400'],
-            ['Вопросы, связанные с договором дарения',donation_contract, '#5DADE2'],
-            ['Вопросы по процессуальным действиям госорганов',authority_procedural_action,'#48C9B0'],
-            ['Семейное право',family_law, '#F535AA'],
-            ['Трудовые споры',labor_disputes, '#B6B6B4'],
-            ['Земельные споры',land_disputes, '#657383'],
-            ['Жилищные споры',housing_disputes, '#2B65EC'],
-            ['Вопросы социальной защиты(пенсии, пособии)',social_protection, '#FF4500'],
-            ['По уголовным делам',criminal_case, '#800000'],
-            ['По административным правонарушениям',administrative_offense, '#0000FF'],
-            ['О взыскании морального и материального вреда',moral_material_harm, '#FF4000'],
-            ['Вопросы расторжении брака(разделение имущества)',divorce, '#1C1C1C'],
-            ['Вопросы, связанные с алиментами',alimony, '#9F81F7'],
-            ['Оформление документов удостоверяющих личность',identity_document, '#78866B'],
-            ['Вопросы, связанные с домашним насилием',domestic_violence, '#806517'],
+            ['Вопросы, связанные с наследством (завещание, выделение доли из наследства)' , legacy,'#B03A2E'],
+            ['Вопросы, связанные с дарением имущества и имущественных прав' , donation_register,'#76448A'],
+            [ 'Право собственности на движимое и недвижимое имущество (взыскание долга, купля-продажа)' , private_property,'#2471A3 '],
+            ['Вопросы, связанные с регистрацией юридического лица' , entity_registration,'#229954'],
+            ['Вопросы, связанные с подрядом, займом, залогом' , civil_contract,'#F1C40F'],
+            ['Вопросы, связанные с заключением и расторжением брака', divorce,'#D35400'],
+            ['Вопросы, связанные разделением имущества' , property_division,'#5DADE2'],
+            ['Вопросы, связанные с алиментами' , alimony,'#48C9B0'],
+            ['Вопросы, связанные с родительскими правами(лишение, ограничение и восстановление)' , parent_rights,'#F535AA'],
+            ['Другие вопросы семейного права' , family_law,'#B6B6B4'],
+            ['Вопросы, связанные с трудовым договором' , labor_disputes,'#657383'],
+            ['Вопросы, связанные с гарантиями и компенсациями (оплатой) в трудовом праве', labor_refund,'#2B65EC'],
+            ['Вопросы, связанные с регулированием труда отдельных категорий граждан' , labor_civil,'#FF4500'],
+            ['Другие вопросы трудового права' , labor_other, '#800000'],
+            ['Вопросы, связанные с предоставлением земельного участка и оформлением документов на земельный участок' , land_disputes,'#0000FF'],
+            ['Передача земельного участка и другие вопросы земельного права', land_trade,'#FF4000'],
+            ['Жилищное право' , housing_disputes, '#1C1C1C'],
+            ['Вопросы, связанные с опекунством и попечительством', guardianship,'#9F81F7'],
+            ['Вопросы, связанные с пенсиями и пособиями' , social_protection,'#78866B'],
+            ['Вопросы, связанные с инвалидностью и льготами' , privileges,'#806517'],
+            ['Другие вопросы социальной защиты' , social_other,'#B03A2E'],
+            ['Уголовное право' , criminal_case ,'#76448A'],
+            ['Административные правонарушения' , administrative_offense, '#2471A3 '],
+            ['Взыскание морального и материального вреда', moral_material_harm,'#F1C40F'],
+            ['Вопросы, связанные с паспортом и другими документами удостоверяющих личность' , identity_document,'#D35400'],
+            ['Вопросы, связанные с оформлением свидетельства о рождении и о смерти', evidence_document ,'#F535AA'],
+            ['Другие вопросы документирования', document_other, '#B6B6B4'],
+            ['Вопросы, связанные с домашним насилием', domestic_violence, '#2B65EC'],
+            ['По другим вопросам (не указанным выше)', other, '#FF4500'],
         ]);
 
         var options = {
@@ -377,11 +397,11 @@
     <div id="consultbarchart" class="barchart"></div>
 
     <div class="print-page-break"></div>
-    <div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
+   <!--<div class="main-heading centre-align" style="margin-top: 35px;">По вопросам домашнего насилия и насильственных действий</div>
 
     <div id="visexpiechart" class="piechart"></div>
     <div id="viagepiechart" class="piechart"></div>
     <div class="print-page-break"></div>
     <div id="visocialpiechart" class="piechart"></div>
-    <div id="vicivilpiechart" class="piechart"></div>
+    <div id="vicivilpiechart" class="piechart"></div>-->
 </div>

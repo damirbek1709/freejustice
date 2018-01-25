@@ -56,7 +56,6 @@ AppAsset::register($this);
         $items_arr = [
             ['label' => 'Центры', 'url' => ['/site/index']],
             ['label' => 'Сводный отчет', 'url' => ['/site/summary']],
-            ['label' => 'Добавить отчет', 'url' => ['/report/create']],
             ['label' => 'Выход', 'url' => ['/user/logout'],
                 'linkOptions' => ['data-method' => 'post']]
         ];

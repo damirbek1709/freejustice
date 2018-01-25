@@ -21,7 +21,7 @@ use yii\widgets\ActiveForm;
 
 $this->title = Yii::t('user', 'Добавить пользователя');
 $this->params['breadcrumbs'][] = $this->title;
-$users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 0])->andFilterWhere(['!=','id',75])->asArray()->all(), 'id', 'city');
+$users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 0])->andFilterWhere(['!=', 'id', 75])->asArray()->all(), 'id', 'city');
 ?>
 <div class="row">
     <div class="col-md-6 col-md-offset-4 col-sm-6 col-sm-offset-3">
@@ -47,20 +47,17 @@ $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 
                     <input class="form-control" type="text" id="maxArea" name="city">
                 </div>
 
-                <div class="form-group">
-
+                <div class="form-group reg-admin-radio">
                     <?
-                    $new = [1 => 'Региональный администратор', 2 => 'Центр'];
+                    $new = [1 => 'Региональный центр', 2 => 'Центр'];
                     echo Html::radioList('userType', null, $new, ['class' => 'radio']);
                     ?>
                 </div>
 
 
-
                 <div class="form-group reg-admin">
-                    <label class="control-label">Региональный администратор</label>
+                    <label class="control-label">Региональный центр</label>
                     <select class="form-control" name="parent">
-                        <option value="0">Региональнай администратор</option>
                         <?php
                         foreach ($users as $key => $val) {
                             echo Html::tag('option', $val, ['value' => $key]);
@@ -70,7 +67,7 @@ $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 
                 </div>
 
 
-                <div class="form-group radio-list-user">
+                <div class="form-group">
                     <?= Html::submitButton(Yii::t('user', 'Continue'), ['class' => 'btn btn-primary btn-block']) ?><br>
                 </div>
                 <?php ActiveForm::end(); ?>
@@ -80,18 +77,27 @@ $users = ArrayHelper::map(\app\models\User::find()->andFilterWhere(['parent' => 
 </div>
 
 <script type="text/javascript">
-    if(!$('input:radio[name="userType"]').is(':checked')){
-        $('.btn-block').preventDefault();
-        $('.radio-list-user').addClass('has-error');
-    }
+    $('body').on('submit', '#password-recovery-form', function (e) {
+        if (!$('input:radio[name="userType"]').is(':checked')) {
+            e.preventDefault();
+            if (!$('.reg-admin-radio').hasClass('has-error')) {
+                $('.reg-admin-radio').append("<div class='help-block radio-user-list'>Необходимо выбрать тип пользователя.</div>");
+            }
+            $('.reg-admin-radio').addClass('has-error');
+        }
+    });
+
     $('input:radio[name="userType"]').change(
-        function(){
+        function () {
+            $('.reg-admin-radio').removeClass('has-error');
+            $('.radio-user-list').remove();
+            var switcher = false;
             if ($(this).is(':checked') && $(this).val() == 2) {
-                $('.reg-admin').css('display','block');
+                $('.reg-admin').css('display', 'block');
                 // append goes here
             }
-            else{
-                $('.reg-admin').css('display','none');
+            else {
+                $('.reg-admin').css('display', 'none');
             }
         });
 </script>

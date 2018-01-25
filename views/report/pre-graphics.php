@@ -7,4 +7,4 @@ use yii\helpers\Html;
     'title'=>'Откроет сгенерированный PDF в новом окне'
 ]);*/
 ?>
-<?=$this->render('graphics',['report'=>$report,'dataProvider'=>$dataProvider]);?>
+<?=$this->render('graphics',['report'=>$report,'dataProvider'=>$dataProvider,'range'=>$range]);?>

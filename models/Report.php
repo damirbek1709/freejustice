@@ -95,18 +95,16 @@ class Report extends \yii\db\ActiveRecord
     }
 
 
-
-
     public function getDropdownItems($parentId = 0, $level = 0)
     {
         $itemsFormatted = array();
 
-        $items = User::find()->andWhere(['parent' => $parentId])->andFilterWhere(['!=','id',75])->all();
+        $items = User::find()->andWhere(['parent' => $parentId])->andFilterWhere(['!=', 'id', 75])->all();
 
         foreach ($items as $item) {
-            $children = User::find()->where("parent=:parent_id", [":parent_id"=>$item->id])->all();
+            $children = User::find()->where("parent=:parent_id", [":parent_id" => $item->id])->all();
             $child_options = [];
-            foreach($children as $child) {
+            foreach ($children as $child) {
                 $child_options[$child->id] = $child->city;
             }
             $itemsFormatted[$item->city] = $child_options;
@@ -115,7 +113,6 @@ class Report extends \yii\db\ActiveRecord
 
         return $itemsFormatted;
     }
-
     /**
      * @inheritdoc
      */
@@ -123,8 +120,14 @@ class Report extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'month', 'year', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'userType'], 'required'],
-            [['general_amount', 'other', 'vi_general_amount', 'date_created', 'date_updated', 'user_id', 'month', 'equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment', 'traning_issue', 'sort_date'], 'safe'],
-            [['general_amount', 'vi_general_amount', 'user_id', 'month', 'legacy', 'donation_register', 'private_property', 'entity_registration', 'civil_contract', 'trade_contract', 'donation_contract', 'authority_procedural_action', 'family_law', 'labor_disputes', 'land_disputes', 'housing_disputes', 'social_protection', 'criminal_case', 'administrative_offense', 'moral_material_harm', 'divorce', 'alimony', 'identity_document', 'domestic_violence', 'men', 'women', 'age_20', 'age_21_35', 'age_36_60', 'age_60', 'social_poor', 'social_pensioner', 'social_worker', 'social_unemployed', 'social_underage', 'social_disabled', 'civil_kyrgyz_republic', 'civil_foreign', 'civil_without', 'civil_refugee', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'vi_men', 'vi_women', 'vi_age_20', 'vi_age_21_35', 'vi_age_36_60', 'vi_age_60', 'vi_social_poor', 'vi_social_pensioner', 'vi_social_worker', 'vi_social_unemployed', 'vi_social_underage', 'vi_social_disabled', 'vi_civil_kyrgyz_republic', 'vi_civil_foreign', 'vi_civil_without', 'vi_civil_refugee'], 'integer'],
+            [[
+                'general_amount', 'other', 'vi_general_amount', 'date_created', 'date_updated','property_division', 'parent_rights','labor_refund','guardianship','social_other',
+                'labor_civil','labor_other','land_trade','privileges','evidence_document','document_other','user_id', 'month', 'equipment_issue_comment', 'lawyer_duty_issue_comment',
+                'bother_issue_comment', 'traning_issue', 'sort_date'], 'safe'],
+
+            [['property_division', 'parent_rights','labor_refund','labor_civil','labor_other','land_trade','guardianship','privileges','social_other','evidence_document','document_other',
+                'general_amount','vi_general_amount', 'user_id', 'month', 'legacy',
+                'donation_register', 'private_property', 'entity_registration', 'civil_contract', 'trade_contract', 'donation_contract', 'authority_procedural_action', 'family_law', 'labor_disputes', 'land_disputes', 'housing_disputes', 'social_protection', 'criminal_case', 'administrative_offense', 'moral_material_harm', 'divorce', 'alimony', 'identity_document', 'domestic_violence', 'men', 'women', 'age_20', 'age_21_35', 'age_36_60', 'age_60', 'social_poor', 'social_pensioner', 'social_worker', 'social_unemployed', 'social_underage', 'social_disabled', 'civil_kyrgyz_republic', 'civil_foreign', 'civil_without', 'civil_refugee', 'equipment_issue', 'lawyer_duty_issue', 'bother_issue', 'vi_men', 'vi_women', 'vi_age_20', 'vi_age_21_35', 'vi_age_36_60', 'vi_age_60', 'vi_social_poor', 'vi_social_pensioner', 'vi_social_worker', 'vi_social_unemployed', 'vi_social_underage', 'vi_social_disabled', 'vi_civil_kyrgyz_republic', 'vi_civil_foreign', 'vi_civil_without', 'vi_civil_refugee'], 'integer'],
             [['traning_issue'], 'string'],
             [['equipment_issue_comment', 'lawyer_duty_issue_comment', 'bother_issue_comment'], 'string', 'max' => 1000],
         ];
@@ -143,7 +146,6 @@ class Report extends \yii\db\ActiveRecord
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
-
     public function beforeSave($insert)
     {
         if ($this->isNewRecord) {
@@ -154,7 +156,6 @@ class Report extends \yii\db\ActiveRecord
         }
         return parent::beforeSave($insert);
     }
-
     /**
      * @inheritdoc
      */
@@ -165,27 +166,42 @@ class Report extends \yii\db\ActiveRecord
             'user_id' => Yii::t('app', 'Пользователь'),
             'year' => Yii::t('app', 'Год'),
             'month' => Yii::t('app', 'Месяц'),
-            'legacy' => Yii::t('app', 'Вопросы наследства(завещание)'),
-            'donation_register' => Yii::t('app', 'Оформление договора дарения'),
-            'private_property' => Yii::t('app', 'Вопросы, связанные с правом собственности'),
-            'entity_registration' => Yii::t('app', 'Регистрация юридического лица'),
-            'civil_contract' => Yii::t('app', 'Составление гражданско-правовых договоров'),
-            'trade_contract' => Yii::t('app', 'Вопросы, связанные с договором купли и продажи'),
-            'donation_contract' => Yii::t('app', 'Вопросы, связанные с договором дарения'),
-            'authority_procedural_action' => Yii::t('app', 'Вопросы по процессуальным действиям госорганов'),
-            'family_law' => Yii::t('app', 'Семейное право'),
-            'labor_disputes' => Yii::t('app', 'Трудовые споры'),
-            'land_disputes' => Yii::t('app', 'Земельные споры'),
-            'housing_disputes' => Yii::t('app', 'Жилищные споры'),
-            'social_protection' => Yii::t('app', 'Вопросы социальной защиты(пенсии, пособии)'),
-            'criminal_case' => Yii::t('app', 'По уголовным делам'),
-            'administrative_offense' => Yii::t('app', 'По административным правонарушениям'),
-            'moral_material_harm' => Yii::t('app', 'О взыскании морального и материального вреда'),
-            'divorce' => Yii::t('app', 'Вопросы расторжении брака(разделение имущества)'),
+
+
+            'legacy' => Yii::t('app', 'Вопросы, связанные с наследством (завещание, выделение доли из наследства)'),
+            'donation_register' => Yii::t('app', 'Вопросы, связанные с дарением имущества и имущественных прав'),
+            'private_property' => Yii::t('app', 'Право собственности на движимое и недвижимое имущество (взыскание долга, купля-продажа)'),
+            'entity_registration' => Yii::t('app', 'Вопросы, связанные с регистрацией юридического лица'),
+            'civil_contract' => Yii::t('app', 'Вопросы, связанные с подрядом, займом, залогом'),
+            'divorce' => Yii::t('app', 'Вопросы, связанные с заключением и расторжением брака'),
+            'property_division' => Yii::t('app', 'Вопросы, связанные разделением имущества'),
             'alimony' => Yii::t('app', 'Вопросы, связанные с алиментами'),
-            'identity_document' => Yii::t('app', 'Оформление документов удостоверяющих личность'),
+            'parent_rights'=> Yii::t('app', 'Вопросы, связанные с родительскими правами(лишение, ограничение и восстановление)'),
+            'family_law' => Yii::t('app', 'Другие вопросы семейного права'),
+            'labor_disputes' => Yii::t('app', 'Вопросы, связанные с трудовым договором'),
+            'labor_refund' => Yii::t('app', 'Вопросы, связанные с гарантиями и компенсациями (оплатой) в трудовом праве'),
+            'labor_civil' => Yii::t('app', 'Вопросы, связанные с регулированием труда отдельных категорий граждан'),
+            'labor_other' => Yii::t('app', 'Другие вопросы трудового права'),
+            'land_disputes' => Yii::t('app', 'Вопросы, связанные с предоставлением земельного участка и оформлением документов на земельный участок'),
+            'land_trade' => Yii::t('app', 'Передача земельного участка и другие вопросы земельного права'),
+            'housing_disputes' => Yii::t('app', 'Жилищное право'),
+            'guardianship' => Yii::t('app', 'Вопросы, связанные с опекунством и попечительством'),
+            'social_protection' => Yii::t('app', 'Вопросы, связанные с пенсиями и пособиями'),
+            'privileges' => Yii::t('app', 'Вопросы, связанные с инвалидностью и льготами'),
+            'social_other'=>Yii::t('app', 'Другие вопросы социальной защиты'),
+            'criminal_case' => Yii::t('app', 'Уголовное право'),
+            'administrative_offense' => Yii::t('app', 'Административные правонарушения'),
+            'moral_material_harm' => Yii::t('app', 'Взыскание морального и материального вреда'),
+            'identity_document' => Yii::t('app', 'Вопросы, связанные с паспортом и другими документами удостоверяющих личность'),
+            'evidence_document'=>'Вопросы, связанные с оформлением свидетельства о рождении и о смерти',
+            'document_other'=>'Другие вопросы документирования',
             'domestic_violence' => Yii::t('app', 'Вопросы, связанные с домашним насилием'),
-            'other' => Yii::t('app', 'Другое'),
+            'other' => Yii::t('app', 'По другим вопросам (не указанным выше)'),
+
+
+
+
+
 
             'men' => Yii::t('app', 'Мужчины'),
             'women' => Yii::t('app', 'Женщины'),
@@ -197,7 +213,7 @@ class Report extends \yii\db\ActiveRecord
             'social_pensioner' => Yii::t('app', 'Пенсионеры'),
             'social_worker' => Yii::t('app', 'Занятые'),
             'social_unemployed' => Yii::t('app', 'Безработные'),
-            'social_underage' => Yii::t('app', 'Несовершеннолетний'),
+            'social_underage' => Yii::t('app', 'Несовершеннолетние'),
             'social_disabled' => Yii::t('app', 'ЛОВЗ'),
 
             'civil_kyrgyz_republic' => Yii::t('app', 'Граждане КР'),
