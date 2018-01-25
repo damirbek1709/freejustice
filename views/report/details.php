@@ -1,8 +1,9 @@
 <?php
 use yii\helpers\Html;
 ?>
-<div class="main-heading centre-align">Общая статистика консультаций</div>
 <div class="centre-align"><?=$range;?></div>
+<div class="main-heading centre-align">Общая статистика консультаций</div>
+
 
 
 <div class="report-type-cover">
@@ -91,7 +92,7 @@ use yii\helpers\Html;
             <td><?= $report->getTotal($dataProvider->models, 'social_unemployed'); ?></td>
         </tr>
         <tr>
-            <th>Несовершеннолетний</th>
+            <th>Несовершеннолетние</th>
             <td><?= $report->getTotal($dataProvider->models, 'social_underage'); ?></td>
         </tr>
         <tr>

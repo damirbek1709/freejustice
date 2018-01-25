@@ -11,18 +11,35 @@ $this->title = 'Мои отчеты';
 <div class="site-index">
 
     <?php
-    if (Yii::$app->user->identity->isAdmin) {
-        echo Html::a('Добавить', ['/user/add'], ['class' => 'btn btn-success']);
-    }
-    echo Html::tag('div', '', ['class' => 'clear']);
-    $items = ArrayHelper::map($reportModel, 'id', 'city');
-    $result = array_unique($items);
+    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin) {
+        echo Html::a('Добавить центр', ['/user/add'], ['class' => 'btn btn-success']);
+        echo Html::tag('div', '', ['class' => 'clear']);
 
-    foreach ($result as $key => $val) {
-        echo Html::beginTag('div', ['class' => 'col-md-3 pad-lim']);
-        echo Html::a($val, ['/report/city', 'id' => $key]);
-        echo Html::endTag('div');
+        foreach ($reportModel as $item) {
+            echo Html::beginTag('div', ['class' => 'col-md-12 pad-lim']);
+            echo Html::tag('div',$item->city, []);
+            echo Html::tag('div','',['class'=>'clear']);
+            if($item->childs){
+                foreach ($item->childs as $child) {
+                    echo Html::a($child->city, ['/report/city', 'id' => $child->id],['style'=>'margin-right:25px;']);
+                }
+            }
+            echo Html::endTag('div');
+            echo Html::tag('div','',['class'=>'clear']);
+        }
     }
+
+    else{
+        $items = ArrayHelper::map($reportModel, 'id', 'city');
+        $result = array_unique($items);
+        foreach ($result as $key=>$val) {
+            echo Html::beginTag('div', ['class' => 'col-md-3 pad-lim']);
+            echo Html::a($val, ['/report/city','id'=>$key]);
+            echo Html::endTag('div');
+        }
+    }
+
+
     ?>
 
     <? /*= GridView::widget([

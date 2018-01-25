@@ -37,8 +37,8 @@ AppAsset::register($this);
             ['label' => 'Центры', 'url' => ['/site/index']],
             ['label' => 'Управление центрами', 'url' => ['/user/admin']],
             ['label' => 'Отчеты', 'url' => ['/report/index']],
-            ['label' => 'История', 'url' => ['/site/history']],
-            ['label' => 'Рассылка', 'url' => ['/user/mail']],
+            /*['label' => 'История', 'url' => ['/site/history']],
+            ['label' => 'Рассылка', 'url' => ['/user/mail']],*/
 //            ['label' => 'Выход', 'url' => ['/user/logout'],
 //                'linkOptions' => ['data-method' => 'post']]
         ];

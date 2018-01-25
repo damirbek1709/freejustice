@@ -64,7 +64,7 @@ class SiteController extends Controller
         $user = User::findOne(Yii::$app->user->id);
 
         if (Yii::$app->user->identity->isAdmin) {
-            $userModel = User::find()->select(['id', 'city'])->andFilterWhere(['!=', 'id', Yii::$app->user->identity->id])->asArray()->all();
+            $userModel = User::find()->andFilterWhere(['parent'=>0])->andFilterWhere(['!=', 'id', Yii::$app->user->identity->id])->all();
             return $this->render('index', ['reportModel' => $userModel]);
         } else {
             if ($user->childs) {
@@ -85,6 +85,7 @@ class SiteController extends Controller
                 $dataProvider->query->andFilterWhere(['<=', 'month', $month_till]);
                 $dataProvider->query->andFilterWhere(['<=', 'year', $year_till]);
                 $dataProvider->query->andFilterWhere(['user_id' => Yii::$app->user->id]);
+                $dataProvider->setSort(['defaultOrder' => ['sort_date'=>SORT_DESC]]);
                 return $this->render('simple_index', ['dataProvider' => $dataProvider]);
             }
         }

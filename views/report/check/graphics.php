@@ -312,56 +312,77 @@
 
     function drawConsultChart() {
         var data = google.visualization.arrayToDataTable([
-            ['Консультации', '',{ role: 'style' }],
-            ['Вопросы, связанные с наследством (завещание, выделение доли из наследства)' , legacy,'#B03A2E'],
-            ['Вопросы, связанные с дарением имущества и имущественных прав' , donation_register,'#76448A'],
-            [ 'Право собственности на движимое и недвижимое имущество (взыскание долга, купля-продажа)' , private_property,'#2471A3 '],
-            ['Вопросы, связанные с регистрацией юридического лица' , entity_registration,'#229954'],
-            ['Вопросы, связанные с подрядом, займом, залогом' , civil_contract,'#F1C40F'],
-            ['Вопросы, связанные с заключением и расторжением брака', divorce,'#D35400'],
-            ['Вопросы, связанные разделением имущества' , property_division,'#5DADE2'],
-            ['Вопросы, связанные с алиментами' , alimony,'#48C9B0'],
-            ['Вопросы, связанные с родительскими правами(лишение, ограничение и восстановление)' , parent_rights,'#F535AA'],
-            ['Другие вопросы семейного права' , family_law,'#B6B6B4'],
-            ['Вопросы, связанные с трудовым договором' , labor_disputes,'#657383'],
-            ['Вопросы, связанные с гарантиями и компенсациями (оплатой) в трудовом праве', labor_refund,'#2B65EC'],
-            ['Вопросы, связанные с регулированием труда отдельных категорий граждан' , labor_civil,'#FF4500'],
-            ['Другие вопросы трудового права' , labor_other, '#800000'],
-            ['Вопросы, связанные с предоставлением земельного участка и оформлением документов на земельный участок' , land_disputes,'#0000FF'],
-            ['Передача земельного участка и другие вопросы земельного права', land_trade,'#FF4000'],
-            ['Жилищное право' , housing_disputes, '#1C1C1C'],
-            ['Вопросы, связанные с опекунством и попечительством', guardianship,'#9F81F7'],
-            ['Вопросы, связанные с пенсиями и пособиями' , social_protection,'#78866B'],
-            ['Вопросы, связанные с инвалидностью и льготами' , privileges,'#806517'],
-            ['Другие вопросы социальной защиты' , social_other,'#B03A2E'],
-            ['Уголовное право' , criminal_case ,'#76448A'],
-            ['Административные правонарушения' , administrative_offense, '#2471A3 '],
-            ['Взыскание морального и материального вреда', moral_material_harm,'#F1C40F'],
-            ['Вопросы, связанные с паспортом и другими документами удостоверяющих личность' , identity_document,'#D35400'],
-            ['Вопросы, связанные с оформлением свидетельства о рождении и о смерти', evidence_document ,'#F535AA'],
-            ['Другие вопросы документирования', document_other, '#B6B6B4'],
-            ['Вопросы, связанные с домашним насилием', domestic_violence, '#2B65EC'],
-            ['По другим вопросам (не указанным выше)', other, '#FF4500'],
+            ['Консультации', '',  {type: 'string', role: 'annotation'},],
+            ['Вопросы, связанные с наследством (завещание, выделение доли из наследства)' , legacy, legacy],
+            ['Вопросы, связанные с дарением имущества и имущественных прав' , donation_register,donation_register],
+            [ 'Право собственности на движимое и недвижимое имущество (взыскание долга, купля-продажа)' , private_property,private_property],
+            ['Вопросы, связанные с регистрацией юридического лица' , entity_registration,entity_registration],
+            ['Вопросы, связанные с подрядом, займом, залогом' , civil_contract,civil_contract],
+            ['Вопросы, связанные с заключением и расторжением брака', divorce,divorce],
+            ['Вопросы, связанные разделением имущества' , property_division,property_division],
+            ['Вопросы, связанные с алиментами' , alimony,alimony],
+            ['Вопросы, связанные с родительскими правами(лишение, ограничение и восстановление)' , parent_rights,parent_rights],
+            ['Другие вопросы семейного права' , family_law,family_law],
+            ['Вопросы, связанные с трудовым договором' , labor_disputes,labor_disputes],
+            ['Вопросы, связанные с гарантиями и компенсациями (оплатой) в трудовом праве', labor_refund,labor_refund],
+            ['Вопросы, связанные с регулированием труда отдельных категорий граждан' , labor_civil,labor_civil],
+            ['Другие вопросы трудового права' , labor_other, labor_other],
+            ['Вопросы, связанные с предоставлением земельного участка и оформлением документов на земельный участок' , land_disputes,land_disputes],
+            ['Передача земельного участка и другие вопросы земельного права', land_trade,land_trade],
+            ['Жилищное право' , housing_disputes, housing_disputes],
+            ['Вопросы, связанные с опекунством и попечительством', guardianship,guardianship],
+            ['Вопросы, связанные с пенсиями и пособиями' , social_protection,social_protection],
+            ['Вопросы, связанные с инвалидностью и льготами' , privileges,privileges],
+            ['Другие вопросы социальной защиты' , social_other,social_other],
+            ['Уголовное право' , criminal_case ,criminal_case],
+            ['Административные правонарушения' , administrative_offense, administrative_offense],
+            ['Взыскание морального и материального вреда', moral_material_harm,moral_material_harm],
+            ['Вопросы, связанные с паспортом и другими документами удостоверяющих личность' , identity_document,identity_document],
+            ['Вопросы, связанные с оформлением свидетельства о рождении и о смерти', evidence_document ,evidence_document],
+            ['Другие вопросы документирования', document_other, document_other],
+            ['Вопросы, связанные с домашним насилием', domestic_violence, domestic_violence],
+            ['По другим вопросам (не указанным выше)', other, other],
         ]);
 
         var options = {
-            'title': 'Вопрос предоставленных консультаций',
-            'chartArea': {  width: 500,left: 250, top:50,height:720},
-            'legend': { position: "none",
+            'title': 'Вопросы предоставленных консультаций',
+            'chartArea': {width: 350, left: 350, top: 50, height: 750},
+            'legend': {
+                position: "none",
                 maxLines: 2,
                 textStyle: {
                     fontSize: 10
-                } },
-            'width': 770,
+                }
+            },
+            'width': 740,
             'height': 750,
             'titleTextStyle': {
                 'fontName': 'Play',
                 'fontSize': 19,
             },
-            'hAxis' : { textStyle : { fontSize: 11},format: '0'},
-            'vAxis' : { textStyle : {fontSize: 11},format: '0'},
+            'hAxis': {textStyle: {fontSize: 10}, format: '0'},
+            'vAxis': {textStyle: {fontSize: 10}, format: '0'},
 
-        };
+        }
+
+        /*var options = {
+            'title': 'Вопрос предоставленных консультаций',
+            'chartArea': {  width: 400,left: 350, top:50,height:720},
+            'legend': { position: "none",
+                maxLines: 2,
+                textStyle: {
+                    fontSize: 10
+                } },
+            'width': 740,
+            'height': 750,
+            'titleTextStyle': {
+                'fontName': 'Play',
+                'fontSize': 19,
+            },
+            'hAxis' : { textStyle : { fontSize: 10},format: '0'},
+            'vAxis' : { textStyle : {fontSize: 10},format: '0'},
+
+        };*/
             var chart = new google.visualization.BarChart(document.getElementById('consultbarchart'));
         google.visualization.events.addListener(chart, 'ready', function () {
             document.getElementById('consult_input').value = chart.getImageURI();
